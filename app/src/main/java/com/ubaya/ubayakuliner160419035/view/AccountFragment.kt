@@ -36,8 +36,7 @@ class AccountFragment : Fragment() {
         observeViewModel()
 
         buttonEditAccount.setOnClickListener {
-            val action= AccountFragmentDirections.actionEditAccount()
-            Navigation.findNavController(it).navigate(action)
+
         }
     }
 

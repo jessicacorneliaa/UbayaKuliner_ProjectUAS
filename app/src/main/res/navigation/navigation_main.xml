@@ -29,9 +29,6 @@
         android:name="com.ubaya.ubayakuliner160419035.view.AccountFragment"
         android:label="Account"
         tools:layout="@layout/fragment_account" >
-        <action
-            android:id="@+id/actionEditAccount"
-            app:destination="@id/editAccountFragment" />
         <argument
             android:name="username"
             app:argType="string" />
@@ -63,11 +60,6 @@
             android:name="promoId"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/editAccountFragment"
-        android:name="com.ubaya.ubayakuliner160419035.view.EditAccountFragment"
-        android:label="fragment_edit_account"
-        tools:layout="@layout/fragment_edit_account" />
     <fragment
         android:id="@+id/itemReservation"
         android:name="com.ubaya.ubayakuliner160419035.view.ReservationListFragment"
