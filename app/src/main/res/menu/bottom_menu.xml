@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemHome"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemReservation"
+        android:icon="@drawable/ic_baseline_bookmark_24"
+        android:title="Reservation"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemPromo"
+        android:icon="@drawable/ic_baseline_monetization_on_24"
+        android:title="Promo"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemAccount"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Account"
+        app:showAsAction="always" />
+</menu>
