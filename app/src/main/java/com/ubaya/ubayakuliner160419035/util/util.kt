@@ -8,6 +8,8 @@ import com.squareup.picasso.Picasso
 import com.ubaya.ubayakuliner160419035.R
 import java.lang.Exception
 
+// fun load Image
+
 fun ImageView.loadImage(url:String, progressBar: ProgressBar){
     Picasso.get()
         .load(url)
