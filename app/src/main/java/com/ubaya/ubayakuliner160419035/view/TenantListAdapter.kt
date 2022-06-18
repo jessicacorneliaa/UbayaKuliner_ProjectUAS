@@ -22,15 +22,17 @@ class TenantListAdapter (val tenantList: ArrayList<Tenant>) :RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: TenantViewHolder, position: Int) {
         val tenant= tenantList[position]
-        Log.d("tenant name", tenant.name.toString())
+        Log.d("tenantname", tenant.name.toString())
+
         with(holder.view){
-            textNamaTenant.text= tenant.name
-            textKategori.text= tenant.kategori
+            textNamaTenant.text= tenant.name.toString()
+            textKategori.text= tenant.kategori.toString()
             imageViewTenant.loadImage(tenant.photoUrl.toString(), progressLoadTenantImage)
 
-            val tenantID= tenant.id
+            val tenantID= tenant.id.toString()
+            Log.d("tenantid", tenantID)
             buttonDetail.setOnClickListener {
-                val action= TenantListFragmentDirections.actionTenantDetail(tenantID.toString())
+                val action= TenantListFragmentDirections.actionTenantDetail(tenantID)
                 Navigation.findNavController(it).navigate(action)
             }
         }
@@ -38,9 +40,10 @@ class TenantListAdapter (val tenantList: ArrayList<Tenant>) :RecyclerView.Adapte
 
     override fun getItemCount()= tenantList.size
 
-    fun updateTenantList(newTenantList: ArrayList<Tenant>){
+    fun updateTenantList(newTenantList: List<Tenant>){
         tenantList.clear()
         tenantList.addAll(newTenantList)
+
         notifyDataSetChanged()
     }
 }

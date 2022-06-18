@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/activity_main.xml" value="0.37083333333333335" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/fragment_add_reservation.xml" value="0.33" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/fragment_add_review.xml" value="0.37083333333333335" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/fragment_promo_detail.xml" value="0.22760416666666666" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/reservation_list_item.xml" value="0.27239583333333334" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/tenant_review_item.xml" value="0.22760416666666666" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/tenat_list_item.xml" value="0.24010416666666667" />
         <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UTS/UbayaKuliner160419035/app/src/main/res/drawable/ic_baseline_bookmarks_24.xml" value="0.3335" />
         <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UTS/UbayaKuliner160419035/app/src/main/res/drawable/ic_baseline_phone_24.xml" value="0.3335" />
         <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UTS/UbayaKuliner160419035/app/src/main/res/layout/activity_main.xml" value="0.33" />

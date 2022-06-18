@@ -1,21 +1,27 @@
 package com.ubaya.ubayakuliner160419035.viewmodel
 
 import android.app.Application
+import android.icu.number.IntegerWidth
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ubaya.ubayakuliner160419035.model.Account
-import com.ubaya.ubayakuliner160419035.model.Promo
-import com.ubaya.ubayakuliner160419035.model.Review
-import com.ubaya.ubayakuliner160419035.model.Tenant
+import com.ubaya.ubayakuliner160419035.model.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class DetailViewModel(application:Application):AndroidViewModel(application) {
+class DetailViewModel(application:Application):AndroidViewModel(application), CoroutineScope {
+    private val job= Job()
+
     val tenantsLD= MutableLiveData<Tenant>()
     val tenantsLoadError= MutableLiveData<Boolean>()
     val loadingLD= MutableLiveData<Boolean>()
@@ -34,7 +40,7 @@ class DetailViewModel(application:Application):AndroidViewModel(application) {
     val ACCOUNTTAG= "volleyTag"
     private var accountQueue: RequestQueue?= null
 
-    val reviewsLD= MutableLiveData<ArrayList<Review>>()
+    val reviewsLD= MutableLiveData<List<Review>>()
     val reviewsLoadError= MutableLiveData<Boolean>()
     val reviewsloadingLD= MutableLiveData<Boolean>()
     val REVIEWTAG= "volleyTag"
@@ -44,29 +50,14 @@ class DetailViewModel(application:Application):AndroidViewModel(application) {
         tenantsLoadError.value= false
         loadingLD.value= true
 
-        queue= Volley.newRequestQueue(getApplication())
-
-        Log.d("Tenant ID", tenantId)
-
-        val url= "http://192.168.0.14/anmp/ubayaKuliner160419035.php?data=tenants&id=$tenantId"
-        val stringRequest= StringRequest(
-            Request.Method.GET, url,
-            {
-                val result= Gson().fromJson<Tenant?>(it, Tenant::class.java)
-                Log.d("result", result.toString())
-                tenantsLD.value= result
-                loadingLD.value= false
-                Log.d("showvolley", it)
-            },
-            {
-                loadingLD.value= false
-                tenantsLoadError.value= true
-                Log.d("errorvolley", it.toString())
-            }
-        ).apply {
-            tag= "TAG"
+        launch {
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            tenantsLD.value= db.ubayaKulinerDao().selectTenant(tenantId)
         }
-        queue?.add(stringRequest)
+        loadingLD.value= false
     }
 
     fun fetchPromo(promoId:String){
@@ -127,33 +118,29 @@ class DetailViewModel(application:Application):AndroidViewModel(application) {
         accountQueue?.add(stringRequest)
     }
 
-    fun fetchReviews(tenantId:String){
-        reviewsLoadError.value= false
-        reviewsloadingLD.value= true
-
-        reviewsQueue= Volley.newRequestQueue(getApplication())
-
-
-        val url= "http://192.168.0.14/anmp/ubayaKuliner160419035.php?data=reviews&id=$tenantId"
-        val stringRequest= StringRequest(
-            Request.Method.GET, url,
-            {
-                val sType= object : TypeToken<ArrayList<Review>>(){}.type
-                val result= Gson().fromJson<ArrayList<Review>>(it, sType)
-                Log.d("result", result.toString())
-                reviewsLD.value= result
-                reviewsloadingLD.value= false
-                Log.d("showvolley", it)
-            },
-            {
-                reviewsloadingLD.value= false
-                reviewsLoadError.value= true
-                Log.d("errorvolley", it.toString())
-            }
-        ).apply {
-            tag= "REVIEWTAG"
+    fun addDataReview(list: List<Review>){
+        launch {
+            val db = Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            db.ubayaKulinerDao().insertReviews(*list.toTypedArray())
         }
-        reviewsQueue?.add(stringRequest)
+    }
+
+    fun fetchReviews(tenantId:String){
+//        reviewsLoadError.value= false
+//        reviewsloadingLD.value= true
+
+        launch {
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            reviewsLD.value= db.ubayaKulinerDao().selectReviewsTenant(tenantId)
+            Log.d("fetchreview", reviewsLD.value.toString())
+        }
+//        loadingLD.value= false
     }
 
     override fun onCleared() {
@@ -163,4 +150,7 @@ class DetailViewModel(application:Application):AndroidViewModel(application) {
         accountQueue?.cancelAll(ACCOUNTTAG)
         reviewsQueue?.cancelAll(REVIEWTAG)
     }
+
+    override val coroutineContext: CoroutineContext
+        get()= job  + Dispatchers.Main
 }

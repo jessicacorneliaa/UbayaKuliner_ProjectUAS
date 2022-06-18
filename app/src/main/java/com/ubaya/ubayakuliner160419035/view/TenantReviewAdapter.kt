@@ -15,8 +15,6 @@ import kotlinx.android.synthetic.main.tenant_review_item.view.*
 class TenantReviewAdapter (val tenantReviewList: ArrayList<Review>) : RecyclerView.Adapter<TenantReviewAdapter.TenantReviewViewHolder>(){
     class TenantReviewViewHolder(var view: View): RecyclerView.ViewHolder(view)
 
-    private lateinit var viewModel: DetailViewModel
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TenantReviewViewHolder {
         val infalter= LayoutInflater.from(parent.context)
         val view= infalter.inflate(R.layout.tenant_review_item, parent, false)
@@ -25,18 +23,20 @@ class TenantReviewAdapter (val tenantReviewList: ArrayList<Review>) : RecyclerVi
 
     override fun onBindViewHolder(holder: TenantReviewViewHolder, position: Int) {
         val review= tenantReviewList[position]
+        Log.d("itemrev",review.date.toString())
+
         with(holder.view){
             textTanggalReview.text= review.date
             textCommentReview.text= review.comment
             textAccountReview.text= review.accountId
             ratingBarReview.numStars= 5
-            ratingBarReview.rating=review.star.toFloat()
+            ratingBarReview.rating= review.star
         }
     }
 
     override fun getItemCount()= tenantReviewList.size
 
-    fun updateTenantReviewList(newTenantReviewList: ArrayList<Review>){
+    fun updateTenantReviewList(newTenantReviewList: List<Review>){
         tenantReviewList.clear()
         tenantReviewList.addAll(newTenantReviewList)
         notifyDataSetChanged()

@@ -1,24 +1,46 @@
 package com.ubaya.ubayakuliner160419035.model
 
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "tenants")
 data class Tenant(
-    val id:String?,
+    @PrimaryKey(autoGenerate = false)
+    var id:String,
+    @ColumnInfo(name = "name")
     var name: String?,
+    @ColumnInfo(name = "kategori")
     var kategori: String?,
+    @ColumnInfo(name = "deskripsi")
     var deskripsi: String?,
+    @ColumnInfo(name = "lokasi")
     var lokasi: String?,
+    @ColumnInfo(name = "jamBuka")
     var jamBuka: String?,
+    @ColumnInfo(name = "pembayaran")
     var pembayaran: String?,
+    @ColumnInfo(name = "photoUrl")
     var photoUrl: String?
 )
 
+@Entity(tableName = "reviews")
 data class Review(
-    val id:String?,
+    @ColumnInfo(name = "date")
     var date: String?,
-    var star: Int,
+    @ColumnInfo(name = "star")
+    var star: Float,
+    @ColumnInfo(name = "comment")
     var comment: String?,
+    @ColumnInfo(name = "accountId")
     var accountId: String?,
-    var tenantId: String?
-)
+    @ColumnInfo(name = "tenantId")
+    var tenantId: String
+){
+    @PrimaryKey(autoGenerate = true)
+    var id:Int=0
+}
 
 data class Promo(
     val id:String?,

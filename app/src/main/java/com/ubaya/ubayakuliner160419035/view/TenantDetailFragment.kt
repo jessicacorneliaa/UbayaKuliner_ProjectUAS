@@ -1,6 +1,7 @@
 package com.ubaya.ubayakuliner160419035.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ubaya.ubayakuliner160419035.R
+import com.ubaya.ubayakuliner160419035.model.Review
 import com.ubaya.ubayakuliner160419035.util.loadImage
 import com.ubaya.ubayakuliner160419035.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_tenant_detail.*
@@ -27,6 +29,8 @@ class TenantDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
         var tenantId=""
         if(arguments != null){
@@ -41,7 +45,7 @@ class TenantDetailFragment : Fragment() {
         observeViewModel()
 
         buttonAddReview.setOnClickListener {
-            val action= TenantDetailFragmentDirections.actionAddReviewFragment(tenantId.toString())
+            val action= TenantDetailFragmentDirections.actionAddReviewFragment(tenantId)
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -56,8 +60,6 @@ class TenantDetailFragment : Fragment() {
             textJamBukaDetail.setText(tenant.jamBuka)
             textPembayaranDetail.setText(tenant.pembayaran)
             textDeskripsiDetail.setText(tenant.deskripsi)
-
-
             imageViewTenantDetail.loadImage(tenant.photoUrl.toString(), progressLoadImageTenantDetail)
         }
 
