@@ -85,15 +85,21 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
     }
     fun addPromo(list: List<Promo>){
         launch {
-            val db = buildDb(getApplication())
-            db.ubayaKulinerDao().insertAllPromo()
+            val db = Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            db.ubayaKulinerDao().insertAllPromo(*list.toTypedArray())
         }
     }
     fun refreshPromo(){
+        promosLoadError.value = false
+        promosloadingLD.value = true
         launch {
             val db = buildDb(getApplication())
             promosLD.value =  db.ubayaKulinerDao().selectAllPromo()
         }
+        promosloadingLD.value=false
     }
 
     fun refreshReservation(){

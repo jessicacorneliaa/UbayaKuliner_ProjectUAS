@@ -49,14 +49,20 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
 
     fun addProfile(list:List<Account>){
         launch {
-            val db = buildDb(getApplication())
-            db.ubayaKulinerDao().insertAllAccount()
+            val db = Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            db.ubayaKulinerDao().insertAllAccount(*list.toTypedArray())
         }
     }
     fun addReservation(list: List<Reservation>){
         launch {
-            val db = buildDb(getApplication())
-            db.ubayaKulinerDao().insertAllReserve()
+            val db = Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            db.ubayaKulinerDao().insertAllReserve(*list.toTypedArray())
         }
     }
 
@@ -75,10 +81,13 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
     }
 
     fun fetchPromo(promoId:String){
+        promosLoadError.value = false
+        promosloadingLD.value=true
         launch {
             val db = buildDb(getApplication())
             promosLD.value =  db.ubayaKulinerDao().selectPromo(promoId)
         }
+        promosloadingLD.value = false
     }
 
     fun fetchAccount(accountId:String){
