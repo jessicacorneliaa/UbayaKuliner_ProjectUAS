@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ubaya.ubayakuliner160419035.R
+import com.ubaya.ubayakuliner160419035.model.Reservation
 import com.ubaya.ubayakuliner160419035.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_promo_list.*
 import kotlinx.android.synthetic.main.fragment_reservation_list.*
@@ -52,7 +53,7 @@ class ReservationListFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.reservationsLD.observe(viewLifecycleOwner){
-            reservationListAdapter.updateReservationList(it)
+            reservationListAdapter.updateReservationList(it as ArrayList<Reservation>)
         }
         viewModel.reservationsLoadError.observe(viewLifecycleOwner){
             textErrorReservation.visibility= if(it)View.VISIBLE else View.GONE

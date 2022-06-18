@@ -29,7 +29,7 @@ class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<P
             textValidUntil.text= promo.validUntil
             imageViewPromo.loadImage(promo.photoUrl.toString(), progressLoadPromoList)
 
-            val promoID= promo.id
+            val promoID= promo.idPromo
             buttonRedeem.setOnClickListener {
                 val action= PromoListFragmentDirections.actionPromoDetailFragment(promoID.toString())
                 Navigation.findNavController(it).navigate(action)
@@ -39,7 +39,7 @@ class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<P
 
     override fun getItemCount()= promoList.size
 
-    fun updatePromoList(newPromoList: ArrayList<Promo>){
+    fun updatePromoList(newPromoList: List<Promo>){
         promoList.clear()
         promoList.addAll(newPromoList)
         notifyDataSetChanged()

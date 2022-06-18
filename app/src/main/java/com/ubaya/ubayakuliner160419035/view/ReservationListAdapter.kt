@@ -23,7 +23,7 @@ class ReservationListAdapter (val reservationList: ArrayList<Reservation>) :Recy
         val reservation= reservationList[position]
         with(holder.view){
             textReservationTenant.text= reservation.tenantName
-            textReservationID.text= reservation.id
+            textReservationID.text= reservation.idReservation.toString()
             textReservationDate.text= "Date ${reservation.date}"
             textReservationTime.text= "Time ${reservation.time}"
             textReservationTable.text= "Table ${reservation.table}"

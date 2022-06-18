@@ -13,6 +13,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.ubayakuliner160419035.model.*
+import com.ubaya.ubayakuliner160419035.util.buildDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -46,6 +47,19 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
     val REVIEWTAG= "volleyTag"
     private var reviewsQueue: RequestQueue?= null
 
+    fun addProfile(list:List<Account>){
+        launch {
+            val db = buildDb(getApplication())
+            db.ubayaKulinerDao().insertAllAccount()
+        }
+    }
+    fun addReservation(list: List<Reservation>){
+        launch {
+            val db = buildDb(getApplication())
+            db.ubayaKulinerDao().insertAllReserve()
+        }
+    }
+
     fun fetch(tenantId:String){
         tenantsLoadError.value= false
         loadingLD.value= true
@@ -61,61 +75,19 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
     }
 
     fun fetchPromo(promoId:String){
-        promosLoadError.value= false
-        promosloadingLD.value= true
-
-        promoQueue= Volley.newRequestQueue(getApplication())
-
-        Log.d("Promo ID det", promoId)
-
-        val url= "http://192.168.0.14/anmp/ubayaKuliner160419035.php?data=promos&id=$promoId"
-        val stringRequest= StringRequest(
-            Request.Method.GET, url,
-            {
-                val result= Gson().fromJson<Promo>(it, Promo::class.java)
-                Log.d("resultpromo", result.toString())
-                promosLD.value= result
-                promosloadingLD.value= false
-                Log.d("showvolley", it)
-            },
-            {
-                promosloadingLD.value= false
-                promosLoadError.value= true
-                Log.d("errorvolley", it.toString())
-            }
-        ).apply {
-            tag= "PROMOTAG"
+        launch {
+            val db = buildDb(getApplication())
+            promosLD.value =  db.ubayaKulinerDao().selectPromo(promoId)
         }
-        promoQueue?.add(stringRequest)
     }
 
     fun fetchAccount(accountId:String){
         accountsLoadError.value= false
-        accountsloadingLD.value= true
-
-        accountQueue= Volley.newRequestQueue(getApplication())
-
-        Log.d("Account ID det", accountId)
-
-        val url= "http://192.168.0.14/anmp/ubayaKuliner160419035.php?data=accounts&id=$accountId"
-        val stringRequest= StringRequest(
-            Request.Method.GET, url,
-            {
-                val result= Gson().fromJson<Account>(it, Account::class.java)
-                Log.d("resultaccount", result.toString())
-                accountsLD.value= result
-                accountsloadingLD.value= false
-                Log.d("showvolley", it)
-            },
-            {
-                accountsloadingLD.value= false
-                accountsLoadError.value= true
-                Log.d("errorvolley", it.toString())
-            }
-        ).apply {
-            tag= "ACCOUNTTAG"
+        launch {
+            val db = buildDb(getApplication())
+            accountsLD.value =  db.ubayaKulinerDao().selectAccount(accountId)
+            Log.d("Account:" , accountsLD.value.toString())
         }
-        accountQueue?.add(stringRequest)
     }
 
     fun addDataReview(list: List<Review>){

@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.ubayakuliner160419035.model.*
+import com.ubaya.ubayakuliner160419035.util.buildDb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,13 +30,13 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
     val TAG= "volleyTag"
     private var queue: RequestQueue?= null
 
-    val promosLD= MutableLiveData<ArrayList<Promo>>()
+    val promosLD= MutableLiveData<List<Promo>>()
     val promosLoadError= MutableLiveData<Boolean>()
     val promosloadingLD= MutableLiveData<Boolean>()
     val PROMOTAG= "volleyTag"
     private var promoQueue: RequestQueue?= null
 
-    val reservationsLD= MutableLiveData<ArrayList<Reservation>>()
+    val reservationsLD= MutableLiveData<List<Reservation>>()
     val reservationsLoadError= MutableLiveData<Boolean>()
     val reservationsloadingLD= MutableLiveData<Boolean>()
     val RESERVATIONTAG= "volleyTag"
@@ -82,61 +83,28 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
             tenantsLD.value= db.ubayaKulinerDao().selectAllTenants()
         }
     }
-
-    fun refreshPromo(){
-        promosLoadError.value= false
-        promosloadingLD.value= true
-
-        promoQueue= Volley.newRequestQueue(getApplication())
-        val url= "http://192.168.0.14/anmp/ubayaKuliner160419035.php?data=promos"
-
-        val stringRequest= StringRequest(
-            Request.Method.GET, url,
-            {
-                val sType= object : TypeToken<ArrayList<Promo>>(){}.type
-
-                val result= Gson().fromJson<ArrayList<Promo>>(it, sType)
-                promosLD.value= result
-                promosloadingLD.value= false
-                Log.d("showvolleypromo", it)
-            },
-            {
-                promosloadingLD.value= false
-                promosLoadError.value= true
-                Log.d("errorvolleypromo", it.toString())
-            }
-        ).apply {
-            tag= "PROMOTAG"
+    fun addPromo(list: List<Promo>){
+        launch {
+            val db = buildDb(getApplication())
+            db.ubayaKulinerDao().insertAllPromo()
         }
-        promoQueue?.add(stringRequest)
+    }
+    fun refreshPromo(){
+        launch {
+            val db = buildDb(getApplication())
+            promosLD.value =  db.ubayaKulinerDao().selectAllPromo()
+        }
     }
 
     fun refreshReservation(){
         reservationsLoadError.value= false
         reservationsloadingLD.value= true
 
-        reservationQueue= Volley.newRequestQueue(getApplication())
-        val url= "http://192.168.0.14/anmp/ubayaKuliner160419035.php?data=reservations"
-
-        val stringRequest= StringRequest(
-            Request.Method.GET, url,
-            {
-                val sType= object : TypeToken<ArrayList<Reservation>>(){}.type
-
-                val result= Gson().fromJson<ArrayList<Reservation>>(it, sType)
-                reservationsLD.value= result
-                reservationsloadingLD.value= false
-                Log.d("showvolleyreservation", it)
-            },
-            {
-                reservationsloadingLD.value= false
-                reservationsLoadError.value= true
-                Log.d("errorvolleyreservation", it.toString())
-            }
-        ).apply {
-            tag= "RESERVATIONTAG"
+        launch {
+            val db = buildDb(getApplication())
+            reservationsLD.value =  db.ubayaKulinerDao().selectReservation()
         }
-        reservationQueue?.add(stringRequest)
+        reservationsloadingLD.value=false
     }
 
     fun refreshReview(tenantId:String){
