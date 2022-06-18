@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = arrayOf(Tenant::class, Review::class), version = 1)
+@Database(entities = arrayOf(Tenant::class, Review::class, Promo::class, Account::class, Reservation::class), version = 2)
 abstract class UbayaKulinerDatabase:RoomDatabase() {
     abstract fun ubayaKulinerDao(): UbayaKulinerDao
 

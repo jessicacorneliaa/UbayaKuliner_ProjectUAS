@@ -42,34 +42,61 @@ data class Review(
     var id:Int=0
 }
 
+@Entity(tableName = "promo")
 data class Promo(
-    val id:String?,
+    @PrimaryKey(autoGenerate = false)
+    var idPromo:String,
+    @ColumnInfo(name = "name")
     var name: String?,
+    @ColumnInfo(name = "value")
     var value: String?,
+    @ColumnInfo(name = "valiUntil")
     var validUntil: String?,
+    @ColumnInfo(name = "tnc")
     var tnc: String?,
+    @ColumnInfo(name = "photoUrl")
     var photoUrl: String?,
+    @ColumnInfo(name = "tenantid")
     var tenantid:String?
 )
 
-data class Account(
-    val id:String?,
-    var name: String?,
-    var noTelp: String?,
-    var email: String?,
-    var tglLahir: String?,
-    var photoUrl: String?,
-)
 
-data class Reservation(
-    val id:String?,
-    var tenantName: String?,
-    var date: String?,
-    var time: String?,
-    var table: String?,
-    var people: Int?,
-    var reservationName: String?,
-    var contact: String?,
-    var status: String?,
+@Entity(tableName = "account")
+data class Account(
+    @PrimaryKey(autoGenerate = false)
+    var idAccount:String,
+    @ColumnInfo(name = "name")
+    var name: String?,
+    @ColumnInfo(name = "noTelp")
+    var noTelp: String?,
+    @ColumnInfo(name = "email")
+    var email: String?,
+    @ColumnInfo(name = "tglLahir")
+    var tglLahir: String?,
+    @ColumnInfo(name = "photoUrl")
     var photoUrl: String?,
 )
+@Entity(tableName = "reservation")
+data class Reservation(
+    @ColumnInfo(name = "tenantName")
+    var tenantName: String?,
+    @ColumnInfo(name = "date")
+    var date: String?,
+    @ColumnInfo(name = "time")
+    var time: String?,
+    @ColumnInfo(name = "table")
+    var table: String?,
+    @ColumnInfo(name = "people")
+    var people: Int?,
+    @ColumnInfo(name = "reservationName")
+    var reservationName: String?,
+    @ColumnInfo(name = "contact")
+    var contact: String?,
+    @ColumnInfo(name = "status")
+    var status: String?,
+    @ColumnInfo(name = "photoUrl")
+    var photoUrl: String?,
+){
+    @PrimaryKey(autoGenerate = true)
+    var idReservation:Int = 0
+}

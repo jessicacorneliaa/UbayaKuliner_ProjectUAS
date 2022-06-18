@@ -1,13 +1,17 @@
 package com.ubaya.ubayakuliner160419035.util
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.room.Room
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.ubaya.ubayakuliner160419035.R
+import com.ubaya.ubayakuliner160419035.model.UbayaKulinerDatabase
 import java.lang.Exception
 
+val DB_NAME = "newtododb"
 // fun load Image
 
 fun ImageView.loadImage(url:String, progressBar: ProgressBar){
@@ -26,3 +30,9 @@ fun ImageView.loadImage(url:String, progressBar: ProgressBar){
 
         })
 }
+
+//build db
+fun buildDb(context: Context): UbayaKulinerDatabase =
+    Room.databaseBuilder(context, UbayaKulinerDatabase::class.java, DB_NAME)
+        .addMigrations()
+        .build()
