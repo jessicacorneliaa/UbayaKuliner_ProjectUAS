@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.databinding.BindingAdapter
 import androidx.room.Room
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -11,7 +12,6 @@ import com.ubaya.ubayakuliner160419035.R
 import com.ubaya.ubayakuliner160419035.model.UbayaKulinerDatabase
 import java.lang.Exception
 
-val DB_NAME = "newtododb"
 // fun load Image
 
 fun ImageView.loadImage(url:String, progressBar: ProgressBar){
@@ -31,8 +31,17 @@ fun ImageView.loadImage(url:String, progressBar: ProgressBar){
         })
 }
 
+val DB_NAME = "newtododb"
+
 //build db
 fun buildDb(context: Context): UbayaKulinerDatabase =
     Room.databaseBuilder(context, UbayaKulinerDatabase::class.java, DB_NAME)
         .addMigrations()
         .build()
+
+@BindingAdapter("android:imageUrl","android:progressBar")
+fun loadPhotoURL(view:ImageView, url: String?, pb:ProgressBar){
+    if (url != null) {
+        view.loadImage(url, pb)
+    }
+}

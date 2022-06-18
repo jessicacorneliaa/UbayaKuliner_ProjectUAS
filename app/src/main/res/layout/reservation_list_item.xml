@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="reservation"
+            type="com.ubaya.ubayakuliner160419035.model.Reservation" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -28,6 +36,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
+                android:imageUrl="@{reservation.photoUrl}"
+                android:progressBar="@{progressLoadReservationImage}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -38,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
-                android:text="Reservation ID"
+                android:text="@{reservation.idReservation}"
                 app:layout_constraintStart_toEndOf="@+id/imageViewReservation"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationTenant" />
 
@@ -46,7 +56,7 @@
                 android:id="@+id/textReservationDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="@{reservation.date}"
                 app:layout_constraintStart_toStartOf="@+id/textReservationID"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationID" />
 
@@ -54,7 +64,7 @@
                 android:id="@+id/textReservationTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time"
+                android:text="@{reservation.time}"
                 app:layout_constraintStart_toStartOf="@+id/textReservationDate"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationDate" />
 
@@ -64,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="4dp"
-                android:text="Tenant Name"
+                android:text="@{reservation.tenantName}"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageViewReservation"
@@ -86,7 +96,7 @@
                 android:id="@+id/textReservationTable"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="@{reservation.table}"
                 app:layout_constraintEnd_toEndOf="@+id/textView28"
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -95,7 +105,7 @@
                 android:id="@+id/textReservationPeople"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Number of person"
+                android:text="@{reservation.people}"
                 app:layout_constraintEnd_toEndOf="@+id/textReservationTable"
                 app:layout_constraintStart_toStartOf="@+id/textReservationTable"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationTable" />
@@ -115,7 +125,7 @@
                 android:id="@+id/textReservationName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="@{reservation.reservationName}"
                 app:layout_constraintEnd_toEndOf="@+id/textView31"
                 app:layout_constraintStart_toStartOf="@+id/textView31"
                 app:layout_constraintTop_toBottomOf="@+id/textView31" />
@@ -124,7 +134,7 @@
                 android:id="@+id/textReservationContact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Contact"
+                android:text="@{reservation.contact}"
                 app:layout_constraintEnd_toEndOf="@+id/textReservationName"
                 app:layout_constraintStart_toStartOf="@+id/textReservationName"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationName" />
@@ -135,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Status"
+                android:text="@{reservation.status}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textReservationPeople"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationPeople"
@@ -154,3 +164,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

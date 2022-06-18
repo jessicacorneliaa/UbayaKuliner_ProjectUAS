@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="promo"
+            type="com.ubaya.ubayakuliner160419035.model.Promo" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -68,7 +76,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="fill"
-                android:text="TextView"
+                android:text="@{promo.tnc}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +95,7 @@
                 android:id="@+id/textValidUntilDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="dd-MM-yyyy"
+                android:text="@{promo.validUntil}"
                 android:textStyle="bold|italic"
                 app:layout_constraintStart_toStartOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -96,7 +104,7 @@
                 android:id="@+id/textValueDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20%"
+                android:text="@{promo.value+'%'}"
                 android:textSize="48sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,3 +137,5 @@
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
