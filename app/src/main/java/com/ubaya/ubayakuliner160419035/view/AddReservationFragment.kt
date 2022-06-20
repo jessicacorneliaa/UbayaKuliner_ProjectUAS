@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -23,18 +21,27 @@ import com.ubaya.ubayakuliner160419035.R
 import com.ubaya.ubayakuliner160419035.databinding.FragmentAddReservationBinding
 import com.ubaya.ubayakuliner160419035.model.Account
 import com.ubaya.ubayakuliner160419035.model.Reservation
+import com.ubaya.ubayakuliner160419035.model.Tenant
 import com.ubaya.ubayakuliner160419035.util.UbayaKulinerWorker
 import com.ubaya.ubayakuliner160419035.util.loadImage
 import com.ubaya.ubayakuliner160419035.viewmodel.DetailViewModel
 import com.ubaya.ubayakuliner160419035.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_add_reservation.*
 import kotlinx.android.synthetic.main.fragment_add_reservation.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
+import kotlin.math.log
 
-class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
+    AdapterView.OnItemSelectedListener {
     private lateinit var dataBinding:FragmentAddReservationBinding
     private lateinit var viewModel: DetailViewModel
+    private lateinit var viewModelList: ListViewModel
+    var tenants : ArrayList<Tenant> = ArrayList()
+
+    var selectedItemString = ""
     var year= 0
     var month= 0
     var day= 0
@@ -51,17 +58,68 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var photoUrl= "https://iccadubai.ae/stockpot/wp-content/uploads/sites/2/2020/06/Culinary-Insights-The-UAE-Food.jpg"
         imageViewImageReservation.loadImage(photoUrl, progressLoadImageAddReservation)
+        viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
+        viewModel.fetchAccount("anna_")
 
-        dataBinding.datetimeListener= this
+        dataBinding.datetimeListener = this
+        dataBinding.listener = this
+        editTextDate.setOnClickListener {
+            val today = Calendar.getInstance()
+            val year = today.get(Calendar.YEAR)
+            val month = today.get(Calendar.MONTH)
+            val day = today.get(Calendar.DAY_OF_MONTH)
+
+            //Create Date Picker
+            var picker = DatePickerDialog(requireContext(),
+                DatePickerDialog.OnDateSetListener { datePicker, selYear, selMonth, selDay ->
+                    val calendar = Calendar.getInstance()
+                    calendar.set(selYear, selMonth, selDay)
+
+                    var dateFormat = SimpleDateFormat("dd,MMMM,yyyy")
+                    var date = dateFormat.format(calendar.time)
+                    editTextDate.setText(date)
+                },
+                year, month, day)
+            picker.show()
+        }
+
+        editTextTime.setOnClickListener {
+            val calendar= Calendar.getInstance()
+            val hour= calendar.get(Calendar.HOUR_OF_DAY)
+            val minute= calendar.get(Calendar.MINUTE)
+            TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
+        }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+//        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
+//
+//        var tenant = viewModelList.getTenant()
+//
+//        Log.d("testTenant",tenant.toString())
+        //CREATE ADAPTER FOR SPINNER
+//        val adapter = ArrayAdapter(requireActivity(), R.layout.myspinner_layout, tenants)
+//        adapter.setDropDownViewResource(R.layout.myspinner_item_layout)
+//        spinnerTenant.adapter = adapter
+//
+//        spinnerTenant.onItemSelectedListener=this
+    }
+
+
 
     override fun onButtonAddReservationClick(v: View) {
         Log.d("Update", "Run Add Here")
 
+//        var tenant=editTextTenantName.text.toString()
+//        viewModel.fetch(tenant)
+
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
-//        var reservation = Reservation(editTextTenantName.text.toString(), editTextDate.text.toString(), editTextTime.text.toString(), Integer.parseInt(editTextPeople.text.toString()),
-//            , editTextPhoneNumber.text.toString(), "Booking" )
-//        viewModel.addReservation(listOf(reservation))
+//        Log.d("testTag", v.tag as String)
+        var reservation = Reservation("mcd", editTextDate.text.toString(), editTextTime.text.toString(), Integer.parseInt(editTextPeople.text.toString()), editTextPeople.text.toString(), editTextPhoneNumber.text.toString(), "Booking" )
+        viewModel.addReservation(listOf(reservation))
 
         Toast.makeText(v.context, "Your reservation has been successfully added!", Toast.LENGTH_SHORT).show()
 
@@ -82,20 +140,23 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
     }
 
     override fun onDateClick(v: View) {
-        val calendar= Calendar.getInstance()
-        val year= calendar.get(Calendar.YEAR)
-        val month= calendar.get(Calendar.MONTH)
-        val day= calendar.get(Calendar.DAY_OF_MONTH)
-        activity?.let {
-            DatePickerDialog(it, this, year, month, day).show()
-        }
+//        val calendar= Calendar.getInstance()
+//        val year= calendar.get(Calendar.YEAR)
+//        val month= calendar.get(Calendar.MONTH)
+//        val day= calendar.get(Calendar.DAY_OF_MONTH)
+//        activity?.let {
+//            DatePickerDialog(it, this, year, month, day).show()
+//        }
+
+        //Get current date
+
     }
 
     override fun onTimeClick(v: View) {
-        val calendar= Calendar.getInstance()
-        val hour= calendar.get(Calendar.HOUR_OF_DAY)
-        val minute= calendar.get(Calendar.MINUTE)
-        TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
+//        val calendar= Calendar.getInstance()
+//        val hour= calendar.get(Calendar.HOUR_OF_DAY)
+//        val minute= calendar.get(Calendar.MINUTE)
+//        TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
@@ -114,9 +175,18 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
     override fun onTimeSet(p0: TimePicker?, hourOfDay: Int, minute: Int) {
         val time= hourOfDay.toString().padStart(2, '0')+':'+
                 minute.toString().padStart(2, '0')
-        dataBinding.root.editTextTime
+        dataBinding.root.editTextTime.setText(time)
         this.hour= hourOfDay
         this.minute=minute
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        var selected= tenants[p2]
+        selectedItemString =selected.toString()
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
     }
 
 }

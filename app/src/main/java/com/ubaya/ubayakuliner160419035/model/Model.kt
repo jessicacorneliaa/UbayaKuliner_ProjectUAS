@@ -90,6 +90,8 @@ data class Reservation(
     var reservationName: String?,
     @ColumnInfo(name = "contact")
     var contact: String?,
+//    @ColumnInfo(name = "photoUrl")
+//    var photoUrl: String?,
     @ColumnInfo(name = "status")
     var status: String?,
 ){

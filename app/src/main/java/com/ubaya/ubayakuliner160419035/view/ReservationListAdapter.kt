@@ -23,6 +23,7 @@ class ReservationListAdapter (val reservationList: ArrayList<Reservation>) :Recy
     }
 
     override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
+
         holder.view.reservation = reservationList[position]
 
 //        val reservation= reservationList[position]

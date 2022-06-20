@@ -49,6 +49,7 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
 
     fun addProfile(list:List<Account>){
         launch {
+            Log.d("Input Account",list.toString())
             val db = Room.databaseBuilder(
                 getApplication(),
                 UbayaKulinerDatabase::class.java, "ubayakulinerdb"
@@ -93,7 +94,12 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
     fun fetchAccount(accountId:String){
         accountsLoadError.value= false
         launch {
-            val db = buildDb(getApplication())
+            Log.d("Acc ID", accountId)
+//            val db = buildDb(getApplication())
+            val db = Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
             accountsLD.value =  db.ubayaKulinerDao().selectAccount(accountId)
             Log.d("Account:" , accountsLD.value.toString())
         }

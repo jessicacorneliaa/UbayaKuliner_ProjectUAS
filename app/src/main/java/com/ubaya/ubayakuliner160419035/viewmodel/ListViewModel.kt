@@ -30,6 +30,7 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
     val TAG= "volleyTag"
     private var queue: RequestQueue?= null
 
+
     val promosLD= MutableLiveData<List<Promo>>()
     val promosLoadError= MutableLiveData<Boolean>()
     val promosloadingLD= MutableLiveData<Boolean>()
@@ -71,6 +72,23 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
             Log.d("tenantdb", tenantsLD.value.toString())
         }
         loadingLD.value= false
+    }
+
+    fun getTenant(): List<Tenant> {
+        tenantsLoadError.value= false
+        loadingLD.value= true
+
+        var tenants:List<Tenant> = emptyList()
+        launch {
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
+            tenants = db.ubayaKulinerDao().selectAllTenants()
+            Log.d("tenantdb2", tenants.toString())
+        }
+
+        return tenants
     }
 
     fun clearTask(tenant: Tenant){
