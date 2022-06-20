@@ -84,8 +84,6 @@ data class Reservation(
     var date: String?,
     @ColumnInfo(name = "time")
     var time: String?,
-    @ColumnInfo(name = "table")
-    var table: String?,
     @ColumnInfo(name = "people")
     var people: Int?,
     @ColumnInfo(name = "reservationName")
@@ -94,8 +92,6 @@ data class Reservation(
     var contact: String?,
     @ColumnInfo(name = "status")
     var status: String?,
-    @ColumnInfo(name = "photoUrl")
-    var photoUrl: String?,
 ){
     @PrimaryKey(autoGenerate = true)
     var idReservation:Int = 0

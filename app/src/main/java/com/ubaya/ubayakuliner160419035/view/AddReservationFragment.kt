@@ -13,13 +13,20 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.ubaya.ubayakuliner160419035.R
 import com.ubaya.ubayakuliner160419035.databinding.FragmentAddReservationBinding
+import com.ubaya.ubayakuliner160419035.model.Account
+import com.ubaya.ubayakuliner160419035.model.Reservation
 import com.ubaya.ubayakuliner160419035.util.UbayaKulinerWorker
 import com.ubaya.ubayakuliner160419035.util.loadImage
+import com.ubaya.ubayakuliner160419035.viewmodel.DetailViewModel
+import com.ubaya.ubayakuliner160419035.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_add_reservation.*
 import kotlinx.android.synthetic.main.fragment_add_reservation.view.*
 import java.util.*
@@ -27,6 +34,7 @@ import java.util.concurrent.TimeUnit
 
 class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private lateinit var dataBinding:FragmentAddReservationBinding
+    private lateinit var viewModel: DetailViewModel
     var year= 0
     var month= 0
     var day= 0
@@ -50,6 +58,10 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
     override fun onButtonAddReservationClick(v: View) {
         Log.d("Update", "Run Add Here")
 
+        viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
+//        var reservation = Reservation(editTextTenantName.text.toString(), editTextDate.text.toString(), editTextTime.text.toString(), Integer.parseInt(editTextPeople.text.toString()),
+//            , editTextPhoneNumber.text.toString(), "Booking" )
+//        viewModel.addReservation(listOf(reservation))
 
         Toast.makeText(v.context, "Your reservation has been successfully added!", Toast.LENGTH_SHORT).show()
 
