@@ -82,7 +82,7 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
         var review =Review(formatted, ratingBar.rating, editComment.text.toString(), accountid, tenantId)
         Log.d("test",review.toString())
         viewModel.addDataReview(listOf(review))
-        Toast.makeText(v.context, "Todo Updated", Toast.LENGTH_SHORT).show()
+        Toast.makeText(v.context, "Your review has been successfully added!", Toast.LENGTH_SHORT).show()
         Navigation.findNavController(v).popBackStack()
     }
 

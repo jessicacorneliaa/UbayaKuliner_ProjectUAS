@@ -5,11 +5,14 @@
 
     <data>
         <variable
-            name="tenant"
+            name="reserv"
             type="com.ubaya.ubayakuliner160419035.model.Tenant" />
         <variable
             name="listener"
             type="com.ubaya.ubayakuliner160419035.view.ButtonAddReservationClickListener" />
+        <variable
+            name="datetimeListener"
+            type="com.ubaya.ubayakuliner160419035.view.DateTimeClickListener" />
     </data>
 
 <FrameLayout
@@ -51,6 +54,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:hint="Date"
+            android:onClick="@{datetimeListener::onDateClick}"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +64,7 @@
                 android:id="@+id/editTextDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,6 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Time"
+            android:onClick="@{datetimeListener::onTimeClick}"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
@@ -79,6 +85,7 @@
                 android:id="@+id/editTextTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="time" />
         </com.google.android.material.textfield.TextInputLayout>
 

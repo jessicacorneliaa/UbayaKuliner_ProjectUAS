@@ -26,3 +26,8 @@ interface ButtonWriteReviewClickListener{
 interface ButtonAddReviewClickListener{
     fun onButtonAddReviewClick(v: View)
 }
+
+interface DateTimeClickListener{
+    fun onDateClick(v: View)
+    fun onTimeClick(v: View)
+}
