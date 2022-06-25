@@ -36,9 +36,9 @@
                     android:id="@+id/imageViewTenantDetail"
                     android:layout_width="0dp"
                     android:layout_height="250dp"
-                    android:scaleType="centerCrop"
                     android:imageUrl="@{tenant.photoUrl}"
                     android:progressBar="@{progressLoadImageTenantDetail}"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -52,9 +52,10 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:gravity="top"
-                    android:text="Write a review"
-                    android:tag="@{tenant.id}"
                     android:onClick="@{listener::onButtonWriteReviewClick}"
+                    android:tag="@{tenant.id}"
+                    android:text="Write a review"
+                    android:textColor="@color/secondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textDeskripsiDetail" />
 
@@ -71,14 +72,14 @@
                     android:id="@+id/textDeskripsiDetail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:text="@{tenant.deskripsi}"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/textPembayaranDetail"
-                    app:layout_constraintTop_toBottomOf="@+id/textPembayaranDetail" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
                 <TextView
                     android:id="@+id/textKategoriDetail"
@@ -106,9 +107,10 @@
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:text="Information"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/textKategoriDetail"
                     app:layout_constraintTop_toBottomOf="@+id/textKategoriDetail" />
 
@@ -147,6 +149,7 @@
                     android:layout_marginTop="20dp"
                     android:text="Review"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/textDeskripsiDetail"
                     app:layout_constraintTop_toBottomOf="@+id/textDeskripsiDetail" />
 
@@ -160,6 +163,17 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/textView16"
                     app:layout_constraintTop_toBottomOf="@+id/buttonAddReview" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Description"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/textPembayaranDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/textPembayaranDetail" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>

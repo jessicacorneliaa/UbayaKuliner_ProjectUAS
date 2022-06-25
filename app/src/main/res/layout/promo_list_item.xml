@@ -97,9 +97,10 @@
                 android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="4dp"
-                android:text="Terms and conditions"
-                android:tag="@{promo.idPromo}"
                 android:onClick="@{listener::onButtonDetailPromoClick}"
+                android:tag="@{promo.idPromo}"
+                android:text="Terms and conditions"
+                android:textColor="@color/secondary"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
