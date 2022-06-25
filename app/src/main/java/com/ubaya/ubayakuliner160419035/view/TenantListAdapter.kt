@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.ubaya.ubayakuliner160419035.R
 import com.ubaya.ubayakuliner160419035.databinding.TenatListItemBinding
+import com.ubaya.ubayakuliner160419035.model.Account
 import com.ubaya.ubayakuliner160419035.model.Tenant
 import com.ubaya.ubayakuliner160419035.util.loadImage
 import kotlinx.android.synthetic.main.tenat_list_item.view.*

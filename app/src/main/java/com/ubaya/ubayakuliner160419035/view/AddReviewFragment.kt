@@ -1,5 +1,6 @@
 package com.ubaya.ubayakuliner160419035.view
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -22,10 +23,15 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.math.log
 
 class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
     private lateinit var viewModel:DetailViewModel
     private lateinit var dataBinding: FragmentAddReviewBinding
+
+    companion object{
+        val SHARED_ACCOUNT_ID="SHARED_ACCOUNT_ID"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,14 +76,20 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onButtonAddReviewClick(v: View) {
+        //Retrieve the saved account id
+        var sharedId = context?.packageName
+        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
+        var playerId = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
+
         val current = LocalDateTime.now()
 
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val formatted = current.format(formatter)
 
+        Log.d("check",v.tag.toString())
         val tag = v.tag.toString().split(",")
         val tenantId = tag[0]
-        val accountid = tag[1]
+        val accountid = playerId
 
         var review =Review(formatted, ratingBar.rating, editComment.text.toString(), accountid, tenantId)
         Log.d("test",review.toString())

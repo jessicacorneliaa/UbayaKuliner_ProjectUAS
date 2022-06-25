@@ -1,6 +1,7 @@
 package com.ubaya.ubayakuliner160419035.view
 
 import android.view.View
+import com.ubaya.ubayakuliner160419035.model.Account
 import com.ubaya.ubayakuliner160419035.model.Review
 
 interface ButtonAddReservationClickListener{
@@ -30,4 +31,8 @@ interface ButtonAddReviewClickListener{
 interface DateTimeClickListener{
     fun onDateClick(v: View)
     fun onTimeClick(v: View)
+}
+
+interface ButtonEditAccountClickListener{
+    fun onButtonEditAccountClick(v: View,obj:Account)
 }
