@@ -14,7 +14,7 @@ import com.ubaya.ubayakuliner160419035.model.Promo
 import com.ubaya.ubayakuliner160419035.util.loadImage
 import kotlinx.android.synthetic.main.promo_list_item.view.*
 
-class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<PromoListAdapter.PromoViewHolder>(){
+class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<PromoListAdapter.PromoViewHolder>(), ButtonDetailPromoClickListener{
     class PromoViewHolder(var view: PromoListItemBinding): RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PromoViewHolder {
@@ -25,6 +25,8 @@ class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<P
 
     override fun onBindViewHolder(holder: PromoViewHolder, position: Int) {
         holder.view.promo = promoList[position]
+        holder.view.listener = this
+
 //        val promo= promoList[position]
 //        Log.d("promo name", promo.name.toString())
 //        with(holder.view){
@@ -49,5 +51,8 @@ class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<P
         notifyDataSetChanged()
     }
 
-
+    override fun onButtonDetailPromoClick(v: View) {
+        val action= PromoListFragmentDirections.actionPromoDetailFragment(v.tag.toString())
+        Navigation.findNavController(v).navigate(action)
+    }
 }

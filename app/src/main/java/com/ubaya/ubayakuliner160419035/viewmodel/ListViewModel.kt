@@ -24,6 +24,7 @@ import kotlin.math.log
 class ListViewModel(application: Application):AndroidViewModel(application), CoroutineScope  {
     private val job= Job()
 
+    var tenants : ArrayList<Tenant> = ArrayList()
     val tenantsLD= MutableLiveData<List<Tenant>>()
     val tenantsLoadError= MutableLiveData<Boolean>()
     val loadingLD= MutableLiveData<Boolean>()
@@ -69,7 +70,6 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
                 UbayaKulinerDatabase::class.java, "ubayakulinerdb"
             ).build()
             tenantsLD.value= db.ubayaKulinerDao().selectAllTenants()
-            Log.d("tenantdb", tenantsLD.value.toString())
         }
         loadingLD.value= false
     }
@@ -78,16 +78,16 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         tenantsLoadError.value= false
         loadingLD.value= true
 
-        var tenants:List<Tenant> = emptyList()
+//        var tenants:List<Tenant> = emptyList()
         launch {
             val db= Room.databaseBuilder(
                 getApplication(),
                 UbayaKulinerDatabase::class.java, "ubayakulinerdb"
             ).build()
-            tenants = db.ubayaKulinerDao().selectAllTenants()
-            Log.d("tenantdb2", tenants.toString())
-        }
+            tenantsLD.value = db.ubayaKulinerDao().selectAllTenants()
 
+            Log.d("tenantdb2", tenantsLD.toString())
+        }
         return tenants
     }
 
@@ -114,7 +114,10 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         promosLoadError.value = false
         promosloadingLD.value = true
         launch {
-            val db = buildDb(getApplication())
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
             promosLD.value =  db.ubayaKulinerDao().selectAllPromo()
         }
         promosloadingLD.value=false
@@ -125,7 +128,10 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         reservationsloadingLD.value= true
 
         launch {
-            val db = buildDb(getApplication())
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
             reservationsLD.value =  db.ubayaKulinerDao().selectReservation()
         }
         reservationsloadingLD.value=false

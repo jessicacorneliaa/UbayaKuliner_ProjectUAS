@@ -85,7 +85,10 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
         promosLoadError.value = false
         promosloadingLD.value=true
         launch {
-            val db = buildDb(getApplication())
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).build()
             promosLD.value =  db.ubayaKulinerDao().selectPromo(promoId)
         }
         promosloadingLD.value = false
@@ -93,15 +96,14 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
 
     fun fetchAccount(accountId:String){
         accountsLoadError.value= false
+
         launch {
-            Log.d("Acc ID", accountId)
-//            val db = buildDb(getApplication())
-            val db = Room.databaseBuilder(
+            val db= Room.databaseBuilder(
                 getApplication(),
                 UbayaKulinerDatabase::class.java, "ubayakulinerdb"
             ).build()
             accountsLD.value =  db.ubayaKulinerDao().selectAccount(accountId)
-            Log.d("Account:" , accountsLD.value.toString())
+            Log.d("AccountDetailViewModel:" , accountsLD.value.toString())
         }
     }
 

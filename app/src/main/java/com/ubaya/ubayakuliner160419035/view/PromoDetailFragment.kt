@@ -1,6 +1,7 @@
 package com.ubaya.ubayakuliner160419035.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,13 +43,15 @@ class PromoDetailFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.promosLD.observe(viewLifecycleOwner){
-            var promo= it
+//            var promo= it
 //            textNamaVoucherDetail.setText(promo.name)
 //            textValueDetail.setText(promo.value)
 //            textTncDetail.setText(promo.tnc)
 //            textValidUntilDetail.setText(promo.validUntil)
 //            imageViewPromoDetail.loadImage(promo.photoUrl.toString(), progressLoadImagePromoDetail)
-            dataBinding.promo = promo
+            Log.d("itpromo", it.toString())
+            dataBinding.promo = it
+
         }
     }
 

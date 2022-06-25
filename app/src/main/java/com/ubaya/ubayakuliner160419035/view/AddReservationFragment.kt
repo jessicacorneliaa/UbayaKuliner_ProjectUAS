@@ -2,6 +2,7 @@ package com.ubaya.ubayakuliner160419035.view
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.database.Cursor
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
@@ -34,8 +35,8 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.math.log
 
-class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
-    AdapterView.OnItemSelectedListener {
+class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private lateinit var dataBinding:FragmentAddReservationBinding
     private lateinit var viewModel: DetailViewModel
     private lateinit var viewModelList: ListViewModel
@@ -94,18 +95,15 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
+        //var tenant = viewModelList.getTenant()
+        var tenant= viewModelList.refresh()
+        Log.d("testTenant",tenant.toString())
 
-//        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
-//
-//        var tenant = viewModelList.getTenant()
-//
-//        Log.d("testTenant",tenant.toString())
-        //CREATE ADAPTER FOR SPINNER
-//        val adapter = ArrayAdapter(requireActivity(), R.layout.myspinner_layout, tenants)
-//        adapter.setDropDownViewResource(R.layout.myspinner_item_layout)
-//        spinnerTenant.adapter = adapter
-//
-//        spinnerTenant.onItemSelectedListener=this
+        val adapter =  ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, tenants)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTenant.adapter=adapter
+        spinnerTenant.onItemSelectedListener=this
     }
 
 
