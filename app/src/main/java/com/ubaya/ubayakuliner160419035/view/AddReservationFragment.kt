@@ -2,27 +2,23 @@ package com.ubaya.ubayakuliner160419035.view
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.database.Cursor
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.ubaya.ubayakuliner160419035.R
 import com.ubaya.ubayakuliner160419035.databinding.FragmentAddReservationBinding
-import com.ubaya.ubayakuliner160419035.model.Account
 import com.ubaya.ubayakuliner160419035.model.Reservation
-import com.ubaya.ubayakuliner160419035.model.Tenant
 import com.ubaya.ubayakuliner160419035.util.UbayaKulinerWorker
 import com.ubaya.ubayakuliner160419035.util.loadImage
 import com.ubaya.ubayakuliner160419035.viewmodel.DetailViewModel
@@ -32,15 +28,14 @@ import kotlinx.android.synthetic.main.fragment_add_reservation.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
-import kotlin.math.log
+
 
 class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private lateinit var dataBinding:FragmentAddReservationBinding
     private lateinit var viewModel: DetailViewModel
     private lateinit var viewModelList: ListViewModel
-    var tenants : ArrayList<Tenant> = ArrayList()
+    var tenants : Array<String> = arrayOf()
 
     var selectedItemString = ""
     var year= 0
@@ -52,6 +47,24 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         dataBinding = DataBindingUtil.inflate<FragmentAddReservationBinding>(inflater,R.layout.fragment_add_reservation, container, false)
+//        val v: View = inflater.inflate(R.layout.fragment_add_reservation, container, false)
+
+        val values = arrayOf(
+            "Time at Residence",
+            "Under 6 months",
+            "6-12 months",
+            "1-2 years",
+            "2-4 years",
+            "4-8 years",
+            "8-15 years",
+            "Over 15 years"
+        )
+        val spinner = dataBinding.spinnerTenant
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, values)
+        adapter.setDropDownViewResource(R.layout.myspinner_item_layout)
+        spinner.adapter = adapter
+
+//        return v
         // Inflate the layout for this fragment
         return dataBinding.root
     }
@@ -92,19 +105,19 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
-        //var tenant = viewModelList.getTenant()
-        var tenant= viewModelList.refresh()
-        Log.d("testTenant",tenant.toString())
-
-        val adapter =  ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, tenants)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTenant.adapter=adapter
-        spinnerTenant.onItemSelectedListener=this
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
+//        //var tenant = viewModelList.getTenant()
+//        tenants = arrayOf("tenant 1","tenant 2")
+//        Log.d("testTenant",tenants.toString())
+//
+//        val adapter =  ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, tenants)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        spinnerTenant.adapter=adapter
+//        spinnerTenant.onItemSelectedListener=this
+//    }
 
 
 
