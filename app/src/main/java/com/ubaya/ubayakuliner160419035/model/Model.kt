@@ -96,5 +96,5 @@ data class Reservation(
     var status: String?,
 ){
     @PrimaryKey(autoGenerate = true)
-    var idReservation:Int? = 0
+    var idReservation:Int = 0
 }

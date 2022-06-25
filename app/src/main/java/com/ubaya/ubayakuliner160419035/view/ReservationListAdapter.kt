@@ -43,7 +43,7 @@ class ReservationListAdapter (val reservationList: ArrayList<Reservation>) :Recy
 
     override fun getItemCount()=reservationList.size
 
-    fun updateReservationList(newReservationList: ArrayList<Reservation>){
+    fun updateReservationList(newReservationList: List<Reservation>){
         reservationList.clear()
         reservationList.addAll(newReservationList)
         notifyDataSetChanged()
