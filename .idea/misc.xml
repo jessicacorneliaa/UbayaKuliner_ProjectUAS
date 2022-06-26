@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UI/app/src/main/res/layout/activity_main.xml" value="0.2921195652173913" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UI/app/src/main/res/layout/fragment_account.xml" value="0.2921195652173913" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UI/app/src/main/res/layout/fragment_add_reservation.xml" value="0.2921195652173913" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UI/app/src/main/res/layout/promo_list_item.xml" value="0.2921195652173913" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UI/app/src/main/res/layout/reservation_list_item.xml" value="0.5" />
+        <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UI/app/src/main/res/layout/tenat_list_item.xml" value="0.2921195652173913" />
         <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/activity_main.xml" value="0.37083333333333335" />
         <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/fragment_add_reservation.xml" value="0.33" />
         <entry key="..\:/01  UBAYA/Sem 6/Adv NMP/UAS/UbayaKuliner160419035/app/src/main/res/layout/fragment_add_review.xml" value="0.37083333333333335" />

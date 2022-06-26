@@ -9,7 +9,8 @@ class UbayaKulinerWorker(val context:Context, val params: WorkerParameters):Work
     override fun doWork(): Result {
         NotificationHelper(context).createNotification(
             inputData.getString("title").toString(),
-            inputData.getString("message").toString()
+            inputData.getString("message").toString(),
+            inputData.getString("description").toString()
         )
         return Result.success()
     }

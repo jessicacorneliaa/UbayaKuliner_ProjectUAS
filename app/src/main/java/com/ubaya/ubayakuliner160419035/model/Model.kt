@@ -85,7 +85,7 @@ data class Reservation(
     @ColumnInfo(name = "time")
     var time: String?,
     @ColumnInfo(name = "people")
-    var people: Int?,
+    var people: String,
     @ColumnInfo(name = "reservationName")
     var reservationName: String?,
     @ColumnInfo(name = "contact")

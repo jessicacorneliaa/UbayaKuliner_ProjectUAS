@@ -91,21 +91,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageViewReservation" />
 
             <TextView
-                android:id="@+id/textReservationTable"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/textView28"
-                app:layout_constraintStart_toStartOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
-
-            <TextView
                 android:id="@+id/textReservationPeople"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{reservation.people.toString()}"
-                app:layout_constraintEnd_toEndOf="@+id/textReservationTable"
-                app:layout_constraintStart_toStartOf="@+id/textReservationTable"
-                app:layout_constraintTop_toBottomOf="@+id/textReservationTable" />
+                android:text="@{reservation.people+'number'}"
+                app:layout_constraintEnd_toEndOf="@+id/textView28"
+                app:layout_constraintStart_toStartOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
             <TextView
                 android:id="@+id/textView31"
@@ -138,15 +130,14 @@
 
             <TextView
                 android:id="@+id/textReservationStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@{reservation.status}"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textReservationPeople"
                 app:layout_constraintStart_toStartOf="@+id/textReservationPeople"
-                app:layout_constraintTop_toBottomOf="@+id/textReservationPeople"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/textReservationPeople" />
 
             <ProgressBar
                 android:id="@+id/progressLoadReservationImage"

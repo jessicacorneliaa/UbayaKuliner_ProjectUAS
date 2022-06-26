@@ -77,97 +77,88 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
 
         dataBinding.datetimeListener = this
         dataBinding.listener = this
-        editTextDate.setOnClickListener {
-            val today = Calendar.getInstance()
-            val year = today.get(Calendar.YEAR)
-            val month = today.get(Calendar.MONTH)
-            val day = today.get(Calendar.DAY_OF_MONTH)
-
-            //Create Date Picker
-            var picker = DatePickerDialog(requireContext(),
-                DatePickerDialog.OnDateSetListener { datePicker, selYear, selMonth, selDay ->
-                    val calendar = Calendar.getInstance()
-                    calendar.set(selYear, selMonth, selDay)
-
-                    var dateFormat = SimpleDateFormat("dd,MMMM,yyyy")
-                    var date = dateFormat.format(calendar.time)
-                    editTextDate.setText(date)
-                },
-                year, month, day)
-            picker.show()
-        }
-
-        editTextTime.setOnClickListener {
-            val calendar= Calendar.getInstance()
-            val hour= calendar.get(Calendar.HOUR_OF_DAY)
-            val minute= calendar.get(Calendar.MINUTE)
-            TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
-        }
+//        editTextDate.setOnClickListener {
+//            val today = Calendar.getInstance()
+//            val year = today.get(Calendar.YEAR)
+//            val month = today.get(Calendar.MONTH)
+//            val day = today.get(Calendar.DAY_OF_MONTH)
+//
+//            //Create Date Picker
+//            var picker = DatePickerDialog(requireContext(),
+//                DatePickerDialog.OnDateSetListener { datePicker, selYear, selMonth, selDay ->
+//                    val calendar = Calendar.getInstance()
+//                    calendar.set(selYear, selMonth, selDay)
+//
+//                    var dateFormat = SimpleDateFormat("dd,MMMM,yyyy")
+//                    var date = dateFormat.format(calendar.time)
+//                    editTextDate.setText(date)
+//                },
+//                year, month, day)
+//            picker.show()
+//        }
+//
+//        editTextTime.setOnClickListener {
+//            val calendar= Calendar.getInstance()
+//            val hour= calendar.get(Calendar.HOUR_OF_DAY)
+//            val minute= calendar.get(Calendar.MINUTE)
+//            TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
+//        }
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
-//        //var tenant = viewModelList.getTenant()
-//        tenants = arrayOf("tenant 1","tenant 2")
-//        Log.d("testTenant",tenants.toString())
-//
-//        val adapter =  ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, tenants)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        spinnerTenant.adapter=adapter
-//        spinnerTenant.onItemSelectedListener=this
-//    }
-
-
-
     override fun onButtonAddReservationClick(v: View) {
-        Log.d("Update", "Run Add Here")
-
-//        var tenant=editTextTenantName.text.toString()
-//        viewModel.fetch(tenant)
-
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
-//        Log.d("testTag", v.tag as String)
-        var reservation = Reservation("mcd", editTextDate.text.toString(), editTextTime.text.toString(), Integer.parseInt(editTextPeople.text.toString()), editTextPeople.text.toString(), editTextPhoneNumber.text.toString(), "Booking" )
+
+        val calendar= Calendar.getInstance()
+        calendar.set(year, month, day-1, hour, minute, 0)
+
+        val today= Calendar.getInstance()
+        val diff= calendar.timeInMillis/ 1000L - today.timeInMillis/ 1000L
+
+
+//        dataBinding.reservation?.let {
+//            viewModel.addReservation(listOf(it))
+
+        var reservation = Reservation("MCD", editTextDate.text.toString() , editTextTime.text.toString(),
+            editTextPeople.text.toString(), editNamePerson.text.toString(), editTextPhoneNumber.text.toString(), "Booking" )
         viewModel.addReservation(listOf(reservation))
 
         Toast.makeText(v.context, "Your reservation has been successfully added!", Toast.LENGTH_SHORT).show()
 
-        // selisih waktu skrng dgn waktu reservasi
-        val calendar= Calendar.getInstance()
-        calendar.set(year, month, day, hour, minute, 0)
-        val today= Calendar.getInstance()
-        val diff= calendar.timeInMillis/ 1000L - today.timeInMillis/ 1000L
-
-        val myWorkReq= OneTimeWorkRequestBuilder<UbayaKulinerWorker>()
+        val myWorkReq = OneTimeWorkRequestBuilder<UbayaKulinerWorker>()
             .setInitialDelay(diff, TimeUnit.SECONDS)
-            .setInputData(workDataOf(
-                "title" to "Reminder",
-                "message" to "Here is your reminder of your reservation tomorrow."))
+            .setInputData(
+                workDataOf(
+                    "title" to "Reminder Notification",
+                    "message" to "It is now the day before your reservation date",
+                    "description" to "Dear, ${reservation.reservationName}\nWe would like to remind you of your reservation.\nThese are your reservation details:\n" +
+                            "Tenant name: ${reservation.tenantName}\nDate & Time: ${reservation.date} ${reservation.time}\n" +
+                            "Number of person: ${reservation.people}\n\nSee you soon!")
+            )
             .build()
         WorkManager.getInstance(requireContext()).enqueue(myWorkReq)
         Navigation.findNavController(v).popBackStack()
     }
 
     override fun onDateClick(v: View) {
-//        val calendar= Calendar.getInstance()
-//        val year= calendar.get(Calendar.YEAR)
-//        val month= calendar.get(Calendar.MONTH)
-//        val day= calendar.get(Calendar.DAY_OF_MONTH)
-//        activity?.let {
-//            DatePickerDialog(it, this, year, month, day).show()
-//        }
-
-        //Get current date
+        val calendar= Calendar.getInstance()
+        calendar.add(Calendar.DATE, +1)
+        val year= calendar.get(Calendar.YEAR)
+        val month= calendar.get(Calendar.MONTH)
+        val day= calendar.get(Calendar.DAY_OF_MONTH)
+        activity?.let {
+            //DatePickerDialog(it, this, year, month, day+1).show()
+            val datePickerDialog = DatePickerDialog(it, this, year, month, day)
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
 
     }
 
     override fun onTimeClick(v: View) {
-//        val calendar= Calendar.getInstance()
-//        val hour= calendar.get(Calendar.HOUR_OF_DAY)
-//        val minute= calendar.get(Calendar.MINUTE)
-//        TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
+        val calendar= Calendar.getInstance()
+        val hour= calendar.get(Calendar.HOUR_OF_DAY)
+        val minute= calendar.get(Calendar.MINUTE)
+        TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, day: Int) {
