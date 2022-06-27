@@ -13,10 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.ubayakuliner160419035.model.*
 import com.ubaya.ubayakuliner160419035.util.buildDb
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.log
 
@@ -74,20 +71,19 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         loadingLD.value= false
     }
 
-    fun getTenant(): List<Tenant> {
+
+    suspend fun getTenant(): List<Tenant> {
         tenantsLoadError.value= false
         loadingLD.value= true
 
-//        var tenants:List<Tenant> = emptyList()
-        launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
-            tenantsLD.value = db.ubayaKulinerDao().selectAllTenants()
+        var tenants:List<Tenant> = emptyList()
+        val db= Room.databaseBuilder(
+            getApplication(),
+            UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+        ).build()
+        tenants = db.ubayaKulinerDao().selectAllTenants()
 
-            Log.d("tenantdb2", tenantsLD.toString())
-        }
+        Log.d("tenantdb2", tenantsLD.toString())
         return tenants
     }
 

@@ -1,6 +1,8 @@
 package com.ubaya.ubayakuliner160419035.model
 
 
+
+import android.support.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -22,7 +24,7 @@ data class Tenant(
     @ColumnInfo(name = "pembayaran")
     var pembayaran: String?,
     @ColumnInfo(name = "photoUrl")
-    var photoUrl: String?
+    var photoUrl: String
 )
 
 @Entity(tableName = "reviews")
@@ -90,8 +92,6 @@ data class Reservation(
     var reservationName: String?,
     @ColumnInfo(name = "contact")
     var contact: String?,
-//    @ColumnInfo(name = "photoUrl")
-//    var photoUrl: String?,
     @ColumnInfo(name = "status")
     var status: String?,
 ){

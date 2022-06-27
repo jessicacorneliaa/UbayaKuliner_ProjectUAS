@@ -66,12 +66,12 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
         observeViewModel()
     }
     private fun observeViewModel() {
-        viewModel.tenantsLD.observe(viewLifecycleOwner){
+            viewModel.tenantsLD.observe(viewLifecycleOwner){
 
-            var tenant= it
-            dataBinding.tenant = tenant
+                var tenant= it
+                dataBinding.tenant = tenant
 //            imageViewImageReview.loadImage(tenant.photoUrl.toString(), progressLoadImageAddReview)
-        }
+            }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

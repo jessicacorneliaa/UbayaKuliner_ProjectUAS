@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -19,12 +20,14 @@ import androidx.work.workDataOf
 import com.ubaya.ubayakuliner160419035.R
 import com.ubaya.ubayakuliner160419035.databinding.FragmentAddReservationBinding
 import com.ubaya.ubayakuliner160419035.model.Reservation
+import com.ubaya.ubayakuliner160419035.model.Tenant
 import com.ubaya.ubayakuliner160419035.util.UbayaKulinerWorker
 import com.ubaya.ubayakuliner160419035.util.loadImage
 import com.ubaya.ubayakuliner160419035.viewmodel.DetailViewModel
 import com.ubaya.ubayakuliner160419035.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_add_reservation.*
 import kotlinx.android.synthetic.main.fragment_add_reservation.view.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -36,6 +39,7 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
     private lateinit var viewModel: DetailViewModel
     private lateinit var viewModelList: ListViewModel
     var tenants : Array<String> = arrayOf()
+    var tenantName= mutableListOf<String>()
 
     var selectedItemString = ""
     var year= 0
@@ -48,23 +52,6 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
                               savedInstanceState: Bundle?): View? {
         dataBinding = DataBindingUtil.inflate<FragmentAddReservationBinding>(inflater,R.layout.fragment_add_reservation, container, false)
 //        val v: View = inflater.inflate(R.layout.fragment_add_reservation, container, false)
-
-        val values = arrayOf(
-            "Time at Residence",
-            "Under 6 months",
-            "6-12 months",
-            "1-2 years",
-            "2-4 years",
-            "4-8 years",
-            "8-15 years",
-            "Over 15 years"
-        )
-        val spinner = dataBinding.spinnerTenant
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, values)
-        adapter.setDropDownViewResource(R.layout.myspinner_item_layout)
-        spinner.adapter = adapter
-
-//        return v
         // Inflate the layout for this fragment
         return dataBinding.root
     }
@@ -81,6 +68,17 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
         // Instantiate
         dataBinding.reservation = Reservation("","","","","","","Waiting")
 
+        viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
+        viewLifecycleOwner.lifecycleScope.launch {
+            var tenants= viewModelList.getTenant()
+            for (data in tenants){
+                tenantName.add(data.name.toString())
+            }
+            val spinner = dataBinding.spinnerTenant
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tenantName)
+            adapter.setDropDownViewResource(R.layout.myspinner_item_layout)
+            spinner.adapter = adapter
+        }
 //        editTextDate.setOnClickListener {
 //            val today = Calendar.getInstance()
 //            val year = today.get(Calendar.YEAR)
@@ -110,8 +108,6 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
     }
 
     override fun onButtonAddNewReservationClick(v: View) {
-//        viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
-
         val calendar= Calendar.getInstance()
         calendar.set(year, month, day-1, hour, minute, 0)
 
@@ -139,13 +135,6 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
             WorkManager.getInstance(requireContext()).enqueue(myWorkReq)
             Navigation.findNavController(v).popBackStack()
         }
-
-//        var reservation = Reservation("MCD", editTextDate.text.toString() , editTextTime.text.toString(),
-//            editTextPeople.text.toString(), editNamePerson.text.toString(), editTextPhoneNumber.text.toString(), "Booking" )
-//        viewModel.addReservation(listOf(reservation))
-
-
-
     }
 
     override fun onDateClick(v: View) {

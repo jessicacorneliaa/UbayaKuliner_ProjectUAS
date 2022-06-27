@@ -29,6 +29,10 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
     val TAG= "volleyTag"
     private var queue: RequestQueue?= null
 
+    val tenants2LD= MutableLiveData<Tenant>()
+    val tenants2LoadError= MutableLiveData<Boolean>()
+    val loading2LD= MutableLiveData<Boolean>()
+
     val promosLD= MutableLiveData<Promo>()
     val promosLoadError= MutableLiveData<Boolean>()
     val promosloadingLD= MutableLiveData<Boolean>()
@@ -87,6 +91,7 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
                 UbayaKulinerDatabase::class.java, "ubayakulinerdb"
             ).build()
             tenantsLD.value= db.ubayaKulinerDao().selectTenant(tenantId)
+            Log.d("tenantld", tenantsLD.value.toString())
         }
         loadingLD.value= false
     }
