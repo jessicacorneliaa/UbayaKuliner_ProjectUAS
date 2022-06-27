@@ -48,7 +48,8 @@ interface UbayaKulinerDao {
     @Query("SELECT * FROM account WHERE idAccount=:id")
     suspend fun selectAccount(id:String): Account
 
-
+    @Update
+    suspend fun updateAccount(account : Account)
 
 
 

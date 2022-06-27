@@ -34,5 +34,5 @@ interface DateTimeClickListener{
 }
 
 interface ButtonEditAccountClickListener{
-    fun onButtonEditAccountClick(v: View,obj:Account)
+    suspend fun onButtonEditAccountClick(v: View, obj:Account)
 }

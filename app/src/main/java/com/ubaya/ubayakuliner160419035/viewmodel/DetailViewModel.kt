@@ -57,6 +57,13 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
             db.ubayaKulinerDao().insertAllAccount(*list.toTypedArray())
         }
     }
+    suspend fun editPProfile(account:Account){
+        val db = Room.databaseBuilder(
+            getApplication(),
+            UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+        ).build()
+        db.ubayaKulinerDao().updateAccount(account)
+    }
     fun addReservation(list: List<Reservation>){
         launch {
             val db = Room.databaseBuilder(

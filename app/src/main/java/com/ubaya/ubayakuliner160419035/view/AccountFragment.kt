@@ -68,8 +68,8 @@ class AccountFragment : Fragment(), ButtonEditAccountClickListener {
         }
     }
 
-    override fun onButtonEditAccountClick(v: View, obj: Account) {
-//        viewModel.update(obj.title, obj.notes, obj.priority, obj.uuid)
+    override suspend fun onButtonEditAccountClick(v: View, obj: Account) {
+        viewModel.editPProfile(obj)
         Toast.makeText(v.context, "Todo Updated", Toast.LENGTH_SHORT).show()
         Navigation.findNavController(v).popBackStack()
     }
