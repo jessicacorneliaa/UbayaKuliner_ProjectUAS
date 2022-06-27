@@ -76,7 +76,7 @@ class AccountFragment : Fragment() , EditAccountClickListener{
 
     override fun onButoonEditAccountClickListener(v: View, obj: Account) {
         viewModel.editPProfile(obj)
-        Toast.makeText(v.context, "Todo Updated", Toast.LENGTH_SHORT).show()
+        Toast.makeText(v.context, "Account updated", Toast.LENGTH_SHORT).show()
         Navigation.findNavController(v).popBackStack()
     }
 }
