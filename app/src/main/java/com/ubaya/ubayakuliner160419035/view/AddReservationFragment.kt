@@ -30,7 +30,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener,
+class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, DateTimeClickListener, DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private lateinit var dataBinding:FragmentAddReservationBinding
     private lateinit var viewModel: DetailViewModel
@@ -77,6 +77,10 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
 
         dataBinding.datetimeListener = this
         dataBinding.listener = this
+
+        // Instantiate
+        dataBinding.reservation = Reservation("","","","","","","Waiting")
+
 //        editTextDate.setOnClickListener {
 //            val today = Calendar.getInstance()
 //            val year = today.get(Calendar.YEAR)
@@ -105,8 +109,8 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
 //        }
     }
 
-    override fun onButtonAddReservationClick(v: View) {
-        viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
+    override fun onButtonAddNewReservationClick(v: View) {
+//        viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
 
         val calendar= Calendar.getInstance()
         calendar.set(year, month, day-1, hour, minute, 0)
@@ -114,29 +118,34 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
         val today= Calendar.getInstance()
         val diff= calendar.timeInMillis/ 1000L - today.timeInMillis/ 1000L
 
+        // Do Add Reservation here
+        dataBinding.reservation?.let {
+            val list = listOf(it)
+            viewModel.addReservation(list)
 
-//        dataBinding.reservation?.let {
-//            viewModel.addReservation(listOf(it))
+            Toast.makeText(v.context, "Your reservation has been successfully added!", Toast.LENGTH_SHORT).show()
 
-        var reservation = Reservation("MCD", editTextDate.text.toString() , editTextTime.text.toString(),
-            editTextPeople.text.toString(), editNamePerson.text.toString(), editTextPhoneNumber.text.toString(), "Booking" )
-        viewModel.addReservation(listOf(reservation))
+            val myWorkReq = OneTimeWorkRequestBuilder<UbayaKulinerWorker>()
+                .setInitialDelay(diff, TimeUnit.SECONDS)
+                .setInputData(
+                    workDataOf(
+                        "title" to "Reminder Notification",
+                        "message" to "It is now the day before your reservation date",
+                        "description" to "Dear, ${it.reservationName}\nWe would like to remind you of your reservation.\nThese are your reservation details:\n" +
+                                "Tenant name: ${it.tenantName}\nDate & Time: ${it.date} ${it.time}\n" +
+                                "Number of person: ${it.people}\n\nSee you soon!")
+                )
+                .build()
+            WorkManager.getInstance(requireContext()).enqueue(myWorkReq)
+            Navigation.findNavController(v).popBackStack()
+        }
 
-        Toast.makeText(v.context, "Your reservation has been successfully added!", Toast.LENGTH_SHORT).show()
+//        var reservation = Reservation("MCD", editTextDate.text.toString() , editTextTime.text.toString(),
+//            editTextPeople.text.toString(), editNamePerson.text.toString(), editTextPhoneNumber.text.toString(), "Booking" )
+//        viewModel.addReservation(listOf(reservation))
 
-        val myWorkReq = OneTimeWorkRequestBuilder<UbayaKulinerWorker>()
-            .setInitialDelay(diff, TimeUnit.SECONDS)
-            .setInputData(
-                workDataOf(
-                    "title" to "Reminder Notification",
-                    "message" to "It is now the day before your reservation date",
-                    "description" to "Dear, ${reservation.reservationName}\nWe would like to remind you of your reservation.\nThese are your reservation details:\n" +
-                            "Tenant name: ${reservation.tenantName}\nDate & Time: ${reservation.date} ${reservation.time}\n" +
-                            "Number of person: ${reservation.people}\n\nSee you soon!")
-            )
-            .build()
-        WorkManager.getInstance(requireContext()).enqueue(myWorkReq)
-        Navigation.findNavController(v).popBackStack()
+
+
     }
 
     override fun onDateClick(v: View) {
@@ -151,7 +160,6 @@ class AddReservationFragment : Fragment(),ButtonAddReservationClickListener, Dat
             datePickerDialog.datePicker.minDate = calendar.timeInMillis
             datePickerDialog.show()
         }
-
     }
 
     override fun onTimeClick(v: View) {

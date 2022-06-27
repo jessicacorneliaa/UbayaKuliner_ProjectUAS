@@ -9,7 +9,7 @@
             type="com.ubaya.ubayakuliner160419035.model.Account" />
         <variable
             name="listener"
-            type="com.ubaya.ubayakuliner160419035.view.ButtonEditAccountClickListener" />
+            type="com.ubaya.ubayakuliner160419035.view.EditAccountClickListener" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,10 +49,10 @@
                 android:layout_marginBottom="32dp"
                 android:backgroundTint="@color/button"
                 android:ellipsize="none"
-                android:onClick="@{(view)->listener.onButtonEditAccountClick(view,account)}"
                 android:text="Edit Account"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:onClick="@{(view)->listener.onButoonEditAccountClickListener(view,account)}"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"

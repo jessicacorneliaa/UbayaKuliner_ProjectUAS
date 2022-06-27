@@ -9,7 +9,7 @@
             type="com.ubaya.ubayakuliner160419035.model.Account" />
         <variable
             name="listener"
-            type="com.ubaya.ubayakuliner160419035.view.ButtonAddReservationClickListener" />
+            type="com.ubaya.ubayakuliner160419035.view.ButtonAddNewReservationClickListener" />
         <variable
             name="datetimeListener"
             type="com.ubaya.ubayakuliner160419035.view.DateTimeClickListener" />
@@ -68,6 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="@{datetimeListener::onDateClick}"
+                        android:text="@={reservation.date}"
                         android:focusable="false"
                         android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="@{datetimeListener::onTimeClick}"
+                        android:text="@={reservation.time}"
                         android:focusable="false"
                         android:inputType="time" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -107,6 +109,7 @@
                         android:id="@+id/editTextPeople"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@={reservation.people}"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="phone"
-                        android:text="@{account.noTelp}" />
+                        android:text="@={reservation.contact}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
@@ -136,7 +139,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="32dp"
                     android:backgroundTint="@color/button"
-                    android:onClick="@{listener::onButtonAddReservationClick}"
+                    android:onClick="@{listener::onButtonAddNewReservationClick}"
                     android:tag="@{account.name}"
                     android:text="Add Reservation"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -190,7 +193,9 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editNamePerson"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="@={reservation.reservationName}"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,7 +94,7 @@
                 android:id="@+id/textReservationPeople"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{reservation.people+number}"
+                android:text="@{reservation.people+` number`}"
                 app:layout_constraintEnd_toEndOf="@+id/textView28"
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />

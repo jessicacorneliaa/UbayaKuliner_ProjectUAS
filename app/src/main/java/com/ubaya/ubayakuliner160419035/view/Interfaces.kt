@@ -4,8 +4,8 @@ import android.view.View
 import com.ubaya.ubayakuliner160419035.model.Account
 import com.ubaya.ubayakuliner160419035.model.Review
 
-interface ButtonAddReservationClickListener{
-    fun onButtonAddReservationClick(v:View)
+interface ButtonAddNewReservationClickListener{
+    fun onButtonAddNewReservationClick(v:View)
 }
 
 interface ButtonToAddReservationClickListener{
@@ -33,6 +33,6 @@ interface DateTimeClickListener{
     fun onTimeClick(v: View)
 }
 
-interface ButtonEditAccountClickListener{
-    suspend fun onButtonEditAccountClick(v: View, obj:Account)
+interface EditAccountClickListener{
+    fun onButoonEditAccountClickListener(v:View, obj:Account)
 }

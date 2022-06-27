@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_promo_detail.*
 import kotlinx.android.synthetic.main.fragment_tenant_detail.*
 import kotlinx.android.synthetic.main.fragment_tenant_list.*
 
-class AccountFragment : Fragment(), ButtonEditAccountClickListener {
+class AccountFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
     private lateinit var dataBinding: FragmentAccountBinding
 
@@ -42,7 +42,7 @@ class AccountFragment : Fragment(), ButtonEditAccountClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dataBinding.listener = this
+//        dataBinding.listener = this
 
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
 //        var account1= Account("anna_","Anna", "081005102223", "ann_10@gmail.com", "10 Desember 1990", "https://images.unsplash.com/photo-1474978528675-4a50a4508dc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80")
@@ -68,9 +68,9 @@ class AccountFragment : Fragment(), ButtonEditAccountClickListener {
         }
     }
 
-    override suspend fun onButtonEditAccountClick(v: View, obj: Account) {
-        viewModel.editPProfile(obj)
-        Toast.makeText(v.context, "Todo Updated", Toast.LENGTH_SHORT).show()
-        Navigation.findNavController(v).popBackStack()
-    }
+//    override suspend fun onButtonEditAccountClick(v: View, obj: Account) {
+//        viewModel.editPProfile(obj)
+//        Toast.makeText(v.context, "Todo Updated", Toast.LENGTH_SHORT).show()
+//        Navigation.findNavController(v).popBackStack()
+//    }
 }
