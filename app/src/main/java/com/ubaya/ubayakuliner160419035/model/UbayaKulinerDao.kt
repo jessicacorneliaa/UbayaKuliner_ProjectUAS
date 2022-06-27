@@ -49,7 +49,7 @@ interface UbayaKulinerDao {
     suspend fun selectAccount(id:String): Account
 
     @Update
-    suspend fun updateAccount(account : Account)
+    suspend fun updateAccount(account: Account)
 
 
 

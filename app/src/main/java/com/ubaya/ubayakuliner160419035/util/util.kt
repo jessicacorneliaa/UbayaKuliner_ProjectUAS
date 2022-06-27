@@ -36,7 +36,6 @@ val DB_NAME = "newtododb"
 //build db
 fun buildDb(context: Context): UbayaKulinerDatabase =
     Room.databaseBuilder(context, UbayaKulinerDatabase::class.java, DB_NAME)
-        .addMigrations()
         .build()
 
 @BindingAdapter("android:imageUrl","android:progressBar")
