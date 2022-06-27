@@ -31,32 +31,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageViewReservation"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
             <TextView
                 android:id="@+id/textReservationID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="12dp"
                 android:text="@{Integer.toString(reservation.idReservation)}"
-                app:layout_constraintStart_toEndOf="@+id/imageViewReservation"
-                app:layout_constraintTop_toBottomOf="@+id/textReservationTenant" />
+                app:layout_constraintStart_toStartOf="@+id/textReservationDate"
+                app:layout_constraintTop_toTopOf="@+id/textView14" />
 
             <TextView
                 android:id="@+id/textReservationDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="@{reservation.date}"
-                app:layout_constraintStart_toStartOf="@+id/textReservationID"
-                app:layout_constraintTop_toBottomOf="@+id/textReservationID" />
+                app:layout_constraintStart_toEndOf="@+id/textView15"
+                app:layout_constraintTop_toTopOf="@+id/textView15" />
 
             <TextView
                 android:id="@+id/textReservationTime"
@@ -64,37 +54,37 @@
                 android:layout_height="wrap_content"
                 android:text="@{reservation.time}"
                 app:layout_constraintStart_toStartOf="@+id/textReservationDate"
-                app:layout_constraintTop_toBottomOf="@+id/textReservationDate" />
+                app:layout_constraintTop_toTopOf="@+id/textView18" />
 
             <TextView
                 android:id="@+id/textReservationTenant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@{reservation.tenantName}"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageViewReservation"
-                app:layout_constraintTop_toTopOf="@+id/imageViewReservation" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:text="Table Information"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewReservation" />
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
             <TextView
                 android:id="@+id/textReservationPeople"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{reservation.people+` number`}"
+                android:text="@{reservation.people+` people`}"
                 app:layout_constraintEnd_toEndOf="@+id/textView28"
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -114,7 +104,7 @@
                 android:id="@+id/textReservationName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{reservation.reservationName}"
+                android:text="@{`Name: `+reservation.reservationName}"
                 app:layout_constraintEnd_toEndOf="@+id/textView31"
                 app:layout_constraintStart_toStartOf="@+id/textView31"
                 app:layout_constraintTop_toBottomOf="@+id/textView31" />
@@ -123,7 +113,7 @@
                 android:id="@+id/textReservationContact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{reservation.contact}"
+                android:text="@{`Contact: `+reservation.contact}"
                 app:layout_constraintEnd_toEndOf="@+id/textReservationName"
                 app:layout_constraintStart_toStartOf="@+id/textReservationName"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationName" />
@@ -133,21 +123,38 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@{reservation.status}"
+                android:text="@{`Status: `+reservation.status}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textReservationPeople"
                 app:layout_constraintStart_toStartOf="@+id/textReservationPeople"
                 app:layout_constraintTop_toBottomOf="@+id/textReservationPeople" />
 
-            <ProgressBar
-                android:id="@+id/progressLoadReservationImage"
-                style="?android:attr/progressBarStyle"
+            <TextView
+                android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewReservation"
-                app:layout_constraintEnd_toEndOf="@+id/imageViewReservation"
-                app:layout_constraintStart_toStartOf="@+id/imageViewReservation"
-                app:layout_constraintTop_toTopOf="@+id/imageViewReservation" />
+                android:layout_marginTop="16dp"
+                android:text="ID: "
+                app:layout_constraintStart_toStartOf="@+id/textReservationTenant"
+                app:layout_constraintTop_toBottomOf="@+id/textReservationTenant" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tanggal: "
+                app:layout_constraintStart_toStartOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Waktu: "
+                app:layout_constraintStart_toStartOf="@+id/textView15"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
