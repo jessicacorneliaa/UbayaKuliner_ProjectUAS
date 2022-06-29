@@ -48,7 +48,9 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
     var day= 0
     var hour= 0
     var minute= 0
-    var countReserv = 0
+
+    var accountId:String?=""
+
     companion object{
         val SHARED_ACCOUNT_ID="SHARED_ACCOUNT_ID"
     }
@@ -69,8 +71,13 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
         dataBinding.datetimeListener = this
         dataBinding.listener = this
 
+        //Get Id
+        var sharedId = context?.packageName
+        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
+        accountId = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
+
         // Instantiate
-        dataBinding.reservation = Reservation(selectedItemString,"","","","","","Waiting", "")
+        dataBinding.reservation = Reservation(selectedItemString,"","","","","","Waiting", accountId)
 
         viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
         viewLifecycleOwner.lifecycleScope.launch {
@@ -93,16 +100,13 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
     }
 
     override fun onButtonAddNewReservationClick(v: View) {
-//        Get Id
-        var sharedId = context?.packageName
-        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
-        var accountId = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
-
         val calendar= Calendar.getInstance()
         calendar.set(year, month, day-1, hour, minute, 0)
 
         val today= Calendar.getInstance()
         val diff= calendar.timeInMillis/ 1000L - today.timeInMillis/ 1000L
+
+        var totalReservasi=0
 
         // Do Add Reservation here
         dataBinding.reservation?.let {

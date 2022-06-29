@@ -28,8 +28,8 @@ interface UbayaKulinerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllReserve(vararg reservation: Reservation)
 
-    @Query("SELECT * FROM reservation")
-    suspend fun selectReservation():List<Reservation>
+    @Query("SELECT * FROM reservation where accountId= :accountId")
+    suspend fun selectReservation(accountId:String):List<Reservation>
 
     @Query("SELECT COUNT('idReservation') FROM reservation WHERE accountId =:accountId")
     suspend fun countReservation(accountId:String):Int

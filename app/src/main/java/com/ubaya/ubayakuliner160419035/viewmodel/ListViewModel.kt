@@ -13,7 +13,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.ubayakuliner160419035.model.*
 import com.ubaya.ubayakuliner160419035.util.MIGRATION_1_2
-import com.ubaya.ubayakuliner160419035.util.MIGRATION_2_3
 import com.ubaya.ubayakuliner160419035.util.buildDb
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -68,20 +67,6 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         loadingLD.value= false
     }
 
-    fun refresh2(){
-        tenantsLoadError.value= false
-        loadingLD.value= true
-
-        launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
-            tenantsLD.value= db.ubayaKulinerDao().selectAllTenants()
-            Log.d("tenat2:", tenantsLD.toString())
-        }
-        loadingLD.value= false
-    }
     suspend fun getTenant(): List<Tenant> {
         tenantsLoadError.value= false
         loadingLD.value= true
@@ -120,13 +105,13 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         promosloadingLD.value=false
     }
 
-    fun refreshReservation(){
+    fun refreshReservation(accountId:String){
         reservationsLoadError.value= false
         reservationsloadingLD.value= true
 
         launch {
             val db = buildDb(getApplication())
-            reservationsLD.value =  db.ubayaKulinerDao().selectReservation()
+            reservationsLD.value =  db.ubayaKulinerDao().selectReservation(accountId)
         }
         reservationsloadingLD.value=false
     }

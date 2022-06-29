@@ -36,10 +36,13 @@ fun ImageView.loadImage(url:String, progressBar: ProgressBar){
 val DB_NAME = "ubayakulinerdb"
 
 //build db
-fun buildDb(context: Context): UbayaKulinerDatabase =
-    Room.databaseBuilder(context, UbayaKulinerDatabase::class.java, DB_NAME)
-        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+fun buildDb(context: Context): UbayaKulinerDatabase{
+    val db= Room.databaseBuilder(context, UbayaKulinerDatabase::class.java, DB_NAME)
+        .addMigrations(MIGRATION_1_2)
         .build()
+    return db
+}
+
 
 @BindingAdapter("android:imageUrl","android:progressBar")
 fun loadPhotoURL(view:ImageView, url: String?, pb:ProgressBar){
@@ -51,13 +54,8 @@ fun loadPhotoURL(view:ImageView, url: String?, pb:ProgressBar){
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL(
-            "ALTER TABLE account ADD COLUMN member STRING not null")
-    }
-}
-
-val MIGRATION_2_3 = object : Migration(2, 3) {
-    override fun migrate(database: SupportSQLiteDatabase) {
+            "ALTER TABLE account ADD COLUMN member STRING")
         database.execSQL(
-            "ALTER TABLE reservation ADD COLUMN accountId STRING not null")
+            "ALTER TABLE reservation ADD COLUMN accountId STRING")
     }
 }

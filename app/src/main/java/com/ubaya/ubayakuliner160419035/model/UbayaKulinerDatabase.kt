@@ -5,9 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ubaya.ubayakuliner160419035.util.MIGRATION_1_2
-import com.ubaya.ubayakuliner160419035.util.MIGRATION_2_3
 
-@Database(entities = arrayOf(Tenant::class, Review::class, Promo::class, Account::class, Reservation::class), version = 3)
+@Database(entities = arrayOf(Tenant::class, Review::class, Promo::class, Account::class, Reservation::class), version = 2)
 abstract class UbayaKulinerDatabase:RoomDatabase() {
     abstract fun ubayaKulinerDao(): UbayaKulinerDao
 
@@ -20,7 +19,7 @@ abstract class UbayaKulinerDatabase:RoomDatabase() {
         private fun buildDatabase(context: Context)=
             Room.databaseBuilder(context.applicationContext,
                 UbayaKulinerDatabase::class.java, "ubayakulinerdb")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2)
                 .build()
 
         // Memastikan bahwa object tododb adalah sigleton

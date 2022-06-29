@@ -1,5 +1,6 @@
 package com.ubaya.ubayakuliner160419035.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,10 @@ class ReservationListFragment : Fragment() {
     private lateinit var viewModel: ListViewModel
     private val reservationListAdapter= ReservationListAdapter(arrayListOf())
 
+    companion object{
+        val SHARED_ACCOUNT_ID="SHARED_ACCOUNT_ID"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,8 +34,12 @@ class ReservationListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var sharedId = context?.packageName
+        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
+        var id = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
+
         viewModel= ViewModelProvider(this).get(ListViewModel::class.java)
-        viewModel.refreshReservation()
+        viewModel.refreshReservation(id.toString())
 
 
         recViewReservation.layoutManager= LinearLayoutManager(context)
@@ -42,7 +51,7 @@ class ReservationListFragment : Fragment() {
             recViewReservation.visibility= View.GONE
             textErrorReservation.visibility= View.GONE
             progressLoadReservationList.visibility= View.VISIBLE
-            viewModel.refreshReservation()
+            viewModel.refreshReservation(id.toString())
             refreshLayoutReservation.isRefreshing= false
         }
 
