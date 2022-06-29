@@ -51,7 +51,7 @@
                 android:id="@+id/textValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{promo.value+'%'}"
+                android:text="@{promo.value}"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageViewPromo"

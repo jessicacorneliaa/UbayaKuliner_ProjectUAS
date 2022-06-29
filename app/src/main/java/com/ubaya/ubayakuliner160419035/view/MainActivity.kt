@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         editor.putString(SHARED_ACCOUNT_ID, username)
         editor.apply()
 
-
     }
 
     override fun onSupportNavigateUp():Boolean{

@@ -23,22 +23,7 @@ class ReservationListAdapter (val reservationList: ArrayList<Reservation>) :Recy
     }
 
     override fun onBindViewHolder(holder: ReservationViewHolder, position: Int) {
-
         holder.view.reservation = reservationList[position]
-
-//        val reservation= reservationList[position]
-//        with(holder.view){
-//            textReservationTenant.text= reservation.tenantName
-//            textReservationID.text= reservation.idReservation.toString()
-//            textReservationDate.text= "Date ${reservation.date}"
-//            textReservationTime.text= "Time ${reservation.time}"
-//            textReservationTable.text= "Table ${reservation.table}"
-//            textReservationPeople.text= "Number of person ${reservation.people.toString()}"
-//            textReservationName.text= reservation.reservationName
-//            textReservationContact.text= reservation.contact
-//            textReservationStatus.text= reservation.status
-//            imageViewReservation.loadImage(reservation.photoUrl.toString(), progressLoadReservationImage)
-//        }
     }
 
     override fun getItemCount()=reservationList.size

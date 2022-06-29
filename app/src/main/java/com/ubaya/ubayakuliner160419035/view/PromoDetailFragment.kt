@@ -43,12 +43,6 @@ class PromoDetailFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.promosLD.observe(viewLifecycleOwner){
-//            var promo= it
-//            textNamaVoucherDetail.setText(promo.name)
-//            textValueDetail.setText(promo.value)
-//            textTncDetail.setText(promo.tnc)
-//            textValidUntilDetail.setText(promo.validUntil)
-//            imageViewPromoDetail.loadImage(promo.photoUrl.toString(), progressLoadImagePromoDetail)
             Log.d("itpromo", it.toString())
             dataBinding.promo = it
 

@@ -51,12 +51,12 @@
                 android:id="@+id/textNamaVoucherDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Discount"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewPromoDetail" />
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -88,7 +88,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 android:text="Valid until"
                 app:layout_constraintStart_toStartOf="@+id/textTncDetail"
                 app:layout_constraintTop_toBottomOf="@+id/textTncDetail" />
@@ -97,8 +97,10 @@
                 android:id="@+id/textValidUntilDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 android:text="@{promo.validUntil}"
                 android:textStyle="bold|italic"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -114,19 +116,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textNamaVoucherDetail" />
 
-            <Button
-                android:id="@+id/buttonUseNowDetail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/button"
-                android:text="Use Now"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <ProgressBar
                 android:id="@+id/progressLoadImagePromoDetail"
                 style="?android:attr/progressBarStyle"
@@ -136,6 +125,30 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageViewPromoDetail"
                 app:layout_constraintStart_toStartOf="@+id/imageViewPromoDetail"
                 app:layout_constraintTop_toTopOf="@+id/imageViewPromoDetail" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Promo Code"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="@+id/imageViewPromoDetail"
+                app:layout_constraintStart_toStartOf="@+id/imageViewPromoDetail"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewPromoDetail" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="@{promo.idPromo}"
+                app:layout_constraintEnd_toEndOf="@+id/textView14"
+                app:layout_constraintStart_toStartOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

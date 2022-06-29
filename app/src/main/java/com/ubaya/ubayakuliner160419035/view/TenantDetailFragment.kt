@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -37,9 +38,13 @@ class TenantDetailFragment : Fragment(),ButtonWriteReviewClickListener {
 
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
         var tenantId=""
+        var tenantName=""
         if(arguments != null){
             tenantId= TenantDetailFragmentArgs.fromBundle(requireArguments()).tenantId
+            tenantName= TenantDetailFragmentArgs.fromBundle(requireArguments()).tenantName
         }
+        (activity as AppCompatActivity).supportActionBar?.title = tenantName
+
         viewModel.fetch(tenantId)
         viewModel.fetchReviews(tenantId)
 
@@ -52,7 +57,6 @@ class TenantDetailFragment : Fragment(),ButtonWriteReviewClickListener {
     }
     private fun observeViewModel() {
         viewModel.tenantsLD.observe(viewLifecycleOwner){
-
             var tenant= it
             dataBinding.tenant = tenant
         }
@@ -61,15 +65,13 @@ class TenantDetailFragment : Fragment(),ButtonWriteReviewClickListener {
             tenantReviewAdapter.updateTenantReviewList(it)
         }
         viewModel.reviewsLoadError.observe(viewLifecycleOwner){
-//            textError.visibility= if(it)View.VISIBLE else View.GONE
+
         }
         viewModel.reviewsloadingLD.observe(viewLifecycleOwner){
             if(it){
                 recViewReviewDetail.visibility= View.GONE
-//                progressLoad.visibility= View.VISIBLE
             }else{
                 recViewReviewDetail.visibility= View.VISIBLE
-//                progressLoad.visibility= View.GONE
             }
         }
     }

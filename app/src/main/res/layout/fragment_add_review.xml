@@ -11,6 +11,9 @@
             name="account"
             type="com.ubaya.ubayakuliner160419035.model.Account" />
         <variable
+            name="review"
+            type="com.ubaya.ubayakuliner160419035.model.Review" />
+        <variable
             name="listener"
             type="com.ubaya.ubayakuliner160419035.view.ButtonAddReviewClickListener" />
     </data>
@@ -75,8 +78,10 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
+                    android:rating="@={review.star}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -113,6 +118,7 @@
                         android:gravity="top"
                         android:inputType="textMultiLine"
                         android:lines="8"
+                        android:text="@={review.comment}"
                         android:overScrollMode="always"
                         android:scrollbarStyle="insideInset"
                         android:scrollbars="vertical"
@@ -129,6 +135,7 @@
                     android:onClick="@{listener::onButtonAddReviewClick}"
                     android:tag="@{tenant.id+','+account.idAccount}"
                     android:text="Submit your review"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
                     app:layout_constraintHorizontal_bias="0.498"

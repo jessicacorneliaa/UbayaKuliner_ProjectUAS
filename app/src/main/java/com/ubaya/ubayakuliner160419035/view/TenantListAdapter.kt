@@ -38,7 +38,11 @@ class TenantListAdapter (val tenantList: ArrayList<Tenant>) :RecyclerView.Adapte
     }
 
     override fun onButtonDetailTenantClick(v: View) {
-        val action= TenantListFragmentDirections.actionTenantDetail(v.tag.toString())
+        var string = v.tag.toString().split("+")
+        var id = string[0]
+        var name = string[1]
+
+        val action= TenantListFragmentDirections.actionTenantDetail(id, name)
         Navigation.findNavController(v).navigate(action)
     }
 }

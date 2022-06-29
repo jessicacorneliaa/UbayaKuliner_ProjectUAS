@@ -142,6 +142,7 @@
                     android:onClick="@{listener::onButtonAddNewReservationClick}"
                     android:tag="@{account.name}"
                     android:text="Add Reservation"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textInputLayout6"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout6"

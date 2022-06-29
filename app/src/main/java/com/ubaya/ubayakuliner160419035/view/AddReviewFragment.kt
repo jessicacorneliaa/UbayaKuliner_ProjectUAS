@@ -18,8 +18,6 @@ import com.ubaya.ubayakuliner160419035.databinding.FragmentAddReviewBinding
 import com.ubaya.ubayakuliner160419035.model.Review
 import com.ubaya.ubayakuliner160419035.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_add_review.*
-import kotlinx.android.synthetic.main.fragment_tenant_detail.*
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -44,6 +42,8 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dataBinding.listener = this
+
+        dataBinding.review = Review("", 0F,"","","")
 
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
         var tenantId=""
@@ -75,16 +75,22 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val formatted = current.format(formatter)
 
-        Log.d("check",v.tag.toString())
-        val tag = v.tag.toString().split(",")
-        val tenantId = tag[0]
-        val accountid = id
+        dataBinding.review?.let {
+            Log.d("check",v.tag.toString())
+            val tag = v.tag.toString().split(",")
+            val tenantId = tag[0]
+            val accountid = id
 
-        var review =Review(formatted, ratingBar.rating, editComment.text.toString(), accountid, tenantId)
-        Log.d("test",review.toString())
-        viewModel.addDataReview(listOf(review))
-        Toast.makeText(v.context, "Your review has been successfully added!", Toast.LENGTH_SHORT).show()
-        Navigation.findNavController(v).popBackStack()
+            it.accountId = accountid
+            it.tenantId = tenantId
+            it.date = formatted
+            var list = listOf(it)
+
+//            Log.d("test",review.toString())
+            viewModel.addDataReview(list)
+            Toast.makeText(v.context, "Your review has been successfully added!", Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(v).popBackStack()
+        }
     }
 
 }

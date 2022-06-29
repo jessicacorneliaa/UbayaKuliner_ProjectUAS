@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:onClick="@{listener::onButtonDetailTenantClick}"
-                android:tag="@{tenant.id}"
+                android:tag="@{tenant.id+`+`+tenant.name}"
                 android:text="Detail"
                 android:textColor="@color/secondary"
                 app:layout_constraintBottom_toBottomOf="parent"

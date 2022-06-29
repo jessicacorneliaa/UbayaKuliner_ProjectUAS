@@ -23,6 +23,9 @@
         <action
             android:id="@+id/actionAddReviewFragment"
             app:destination="@id/addReviewFragment" />
+        <argument
+            android:name="tenantName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/itemAccount"

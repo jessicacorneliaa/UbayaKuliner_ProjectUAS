@@ -26,21 +26,6 @@ class PromoListAdapter (val promoList: ArrayList<Promo>) :RecyclerView.Adapter<P
     override fun onBindViewHolder(holder: PromoViewHolder, position: Int) {
         holder.view.promo = promoList[position]
         holder.view.listener = this
-
-//        val promo= promoList[position]
-//        Log.d("promo name", promo.name.toString())
-//        with(holder.view){
-//            textNamaVoucher.text= promo.name
-//            textValue.text= promo.value
-//            textValidUntil.text= promo.validUntil
-//            imageViewPromo.loadImage(promo.photoUrl.toString(), progressLoadPromoList)
-//
-//            val promoID= promo.idPromo
-//            buttonRedeem.setOnClickListener {
-//                val action= PromoListFragmentDirections.actionPromoDetailFragment(promoID.toString())
-//                Navigation.findNavController(it).navigate(action)
-//            }
-//        }
     }
 
     override fun getItemCount()= promoList.size
