@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ubaya.ubayakuliner160419035.R
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_promo_detail.*
 import kotlinx.android.synthetic.main.fragment_tenant_detail.*
 import kotlinx.android.synthetic.main.fragment_tenant_list.*
+import kotlinx.coroutines.launch
 
 class AccountFragment : Fragment() , EditAccountClickListener{
     private lateinit var viewModel: DetailViewModel
@@ -43,20 +45,39 @@ class AccountFragment : Fragment() , EditAccountClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dataBinding.listener = this
-
+        var totalReservasi=0
         viewModel= ViewModelProvider(this).get(DetailViewModel::class.java)
+
+        //Retrieve the saved account id
+        var sharedId = context?.packageName
+        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
+        var accountId = shared?.getString(SHARED_ACCOUNT_ID, null)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            totalReservasi= viewModel.countReservation(accountId.toString())
+            Log.d("totalReservasi", totalReservasi.toString())
+            var member=""
+            if(Integer.parseInt(totalReservasi.toString()) < 5)
+                member= "Silver"
+            else if((Integer.parseInt(totalReservasi.toString()) >= 5) && (Integer.parseInt(totalReservasi.toString()) < 10))
+                member= "Gold"
+            else
+                member= "Platinum"
+
+            Log.d("Member", member)
+
+            viewModel.updateMember(member, accountId.toString())
+        }
+
 //        var account1= Account("anna_","Anna", "081005102223", "ann_10@gmail.com", "10 Desember 1990", "https://images.unsplash.com/photo-1474978528675-4a50a4508dc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80")
 //        var account2 = Account("johnK28", "John","082661382109", "john28@gmail.com", "28 Maret 2001", "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80")
 //        val listProfile = listOf(account1, account2)
 //        viewModel.addProfile(listProfile)
 
-        //Retrieve the saved account id
-        var sharedId = context?.packageName
-        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
-        var playerId = shared?.getString(SHARED_ACCOUNT_ID, null)
+
 
 //        var username=account1.idAccount
-        viewModel.fetchAccount(playerId.toString())
+        viewModel.fetchAccount(accountId.toString())
 
         observeViewModel()
 

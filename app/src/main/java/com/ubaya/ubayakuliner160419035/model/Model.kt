@@ -77,6 +77,8 @@ data class Account(
     var tglLahir: String?,
     @ColumnInfo(name = "photoUrl")
     var photoUrl: String?,
+    @ColumnInfo(name = "member")
+    var member: String?,
 )
 @Entity(tableName = "reservation")
 data class Reservation(
@@ -94,6 +96,8 @@ data class Reservation(
     var contact: String?,
     @ColumnInfo(name = "status")
     var status: String?,
+    @ColumnInfo(name = "accountId")
+    var accountId: String?,
 ){
     @PrimaryKey(autoGenerate = true)
     var idReservation:Int = 0

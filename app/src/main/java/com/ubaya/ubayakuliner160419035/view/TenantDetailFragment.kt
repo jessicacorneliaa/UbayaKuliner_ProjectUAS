@@ -48,10 +48,6 @@ class TenantDetailFragment : Fragment(),ButtonWriteReviewClickListener {
 
         observeViewModel()
 
-//        buttonAddReview.setOnClickListener {
-//            val action= TenantDetailFragmentDirections.actionAddReviewFragment(tenantId)
-//            Navigation.findNavController(it).navigate(action)
-//        }
 
     }
     private fun observeViewModel() {
@@ -59,13 +55,6 @@ class TenantDetailFragment : Fragment(),ButtonWriteReviewClickListener {
 
             var tenant= it
             dataBinding.tenant = tenant
-//            textNamaTenantDetail.setText(tenant.name)
-//            textKategoriDetail.setText(tenant.kategori)
-//            textLokasiDetail.setText(tenant.lokasi)
-//            textJamBukaDetail.setText(tenant.jamBuka)
-//            textPembayaranDetail.setText(tenant.pembayaran)
-//            textDeskripsiDetail.setText(tenant.deskripsi)
-//            imageViewTenantDetail.loadImage(tenant.photoUrl.toString(), progressLoadImageTenantDetail)
         }
 
         viewModel.reviewsLD.observe(viewLifecycleOwner){

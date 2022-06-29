@@ -26,21 +26,6 @@ class TenantListAdapter (val tenantList: ArrayList<Tenant>) :RecyclerView.Adapte
     override fun onBindViewHolder(holder: TenantViewHolder, position: Int) {
         holder.view.tenant = tenantList[position]
         holder.view.listener = this
-//        val tenant= tenantList[position]
-//        Log.d("tenantname", tenant.name.toString())
-//
-//        with(holder.view){
-//            textNamaTenant.text= tenant.name.toString()
-//            textKategori.text= tenant.kategori.toString()
-//            imageViewTenant.loadImage(tenant.photoUrl.toString(), progressLoadTenantImage)
-//
-//            val tenantID= tenant.id.toString()
-//            Log.d("tenantid", tenantID)
-//            buttonDetail.setOnClickListener {
-//                val action= TenantListFragmentDirections.actionTenantDetail(tenantID)
-//                Navigation.findNavController(it).navigate(action)
-//            }
-//        }
     }
 
     override fun getItemCount()= tenantList.size

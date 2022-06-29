@@ -2,6 +2,7 @@ package com.ubaya.ubayakuliner160419035.view
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
@@ -47,12 +48,15 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
     var day= 0
     var hour= 0
     var minute= 0
+    var countReserv = 0
+    companion object{
+        val SHARED_ACCOUNT_ID="SHARED_ACCOUNT_ID"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        dataBinding = DataBindingUtil.inflate<FragmentAddReservationBinding>(inflater,R.layout.fragment_add_reservation, container, false)
-//        val v: View = inflater.inflate(R.layout.fragment_add_reservation, container, false)
-        // Inflate the layout for this fragment
+        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_add_reservation, container, false)
+
         return dataBinding.root
     }
 
@@ -66,7 +70,7 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
         dataBinding.listener = this
 
         // Instantiate
-        dataBinding.reservation = Reservation("","","","","","","Waiting")
+        dataBinding.reservation = Reservation(selectedItemString,"","","","","","Waiting", "")
 
         viewModelList= ViewModelProvider(this).get(ListViewModel::class.java)
         viewLifecycleOwner.lifecycleScope.launch {
@@ -79,35 +83,21 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
             adapter.setDropDownViewResource(R.layout.myspinner_item_layout)
             spinner.adapter = adapter
         }
-//        editTextDate.setOnClickListener {
-//            val today = Calendar.getInstance()
-//            val year = today.get(Calendar.YEAR)
-//            val month = today.get(Calendar.MONTH)
-//            val day = today.get(Calendar.DAY_OF_MONTH)
-//
-//            //Create Date Picker
-//            var picker = DatePickerDialog(requireContext(),
-//                DatePickerDialog.OnDateSetListener { datePicker, selYear, selMonth, selDay ->
-//                    val calendar = Calendar.getInstance()
-//                    calendar.set(selYear, selMonth, selDay)
-//
-//                    var dateFormat = SimpleDateFormat("dd,MMMM,yyyy")
-//                    var date = dateFormat.format(calendar.time)
-//                    editTextDate.setText(date)
-//                },
-//                year, month, day)
-//            picker.show()
-//        }
-//
-//        editTextTime.setOnClickListener {
-//            val calendar= Calendar.getInstance()
-//            val hour= calendar.get(Calendar.HOUR_OF_DAY)
-//            val minute= calendar.get(Calendar.MINUTE)
-//            TimePickerDialog(activity, this, hour, minute, DateFormat.is24HourFormat(activity)).show()
-//        }
+        spinnerTenant.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+                selectedItemString = parent.getItemAtPosition(pos) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
     }
 
     override fun onButtonAddNewReservationClick(v: View) {
+//        Get Id
+        var sharedId = context?.packageName
+        var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
+        var accountId = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
+
         val calendar= Calendar.getInstance()
         calendar.set(year, month, day-1, hour, minute, 0)
 
@@ -116,9 +106,9 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
 
         // Do Add Reservation here
         dataBinding.reservation?.let {
+            it.tenantName=selectedItemString
             val list = listOf(it)
             viewModel.addReservation(list)
-
             Toast.makeText(v.context, "Your reservation has been successfully added!", Toast.LENGTH_SHORT).show()
 
             val myWorkReq = OneTimeWorkRequestBuilder<UbayaKulinerWorker>()
@@ -144,7 +134,6 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
         val month= calendar.get(Calendar.MONTH)
         val day= calendar.get(Calendar.DAY_OF_MONTH)
         activity?.let {
-            //DatePickerDialog(it, this, year, month, day+1).show()
             val datePickerDialog = DatePickerDialog(it, this, year, month, day)
             datePickerDialog.datePicker.minDate = calendar.timeInMillis
             datePickerDialog.show()
@@ -181,7 +170,7 @@ class AddReservationFragment : Fragment(),ButtonAddNewReservationClickListener, 
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         var selected= tenants[p2]
-        selectedItemString =selected.toString()
+        selectedItemString =selected
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

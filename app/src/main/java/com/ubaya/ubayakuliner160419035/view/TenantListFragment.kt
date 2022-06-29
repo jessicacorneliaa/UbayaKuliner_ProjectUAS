@@ -46,6 +46,7 @@ class TenantListFragment : Fragment() {
         viewModel.addDataTenant(listTenant)
 
         // SELECT Tenant
+        viewModel.refresh2()
         viewModel.refresh()
 
         recView.layoutManager= LinearLayoutManager(context)
@@ -57,7 +58,7 @@ class TenantListFragment : Fragment() {
             recView.visibility= View.GONE
             textError.visibility= View.GONE
             progressLoad.visibility= View.VISIBLE
-            viewModel.refresh()
+            viewModel.refresh2()
             refreshLayoutPromo.isRefreshing= false
         }
     }

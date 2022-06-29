@@ -12,6 +12,8 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.ubayakuliner160419035.model.*
+import com.ubaya.ubayakuliner160419035.util.MIGRATION_1_2
+import com.ubaya.ubayakuliner160419035.util.MIGRATION_2_3
 import com.ubaya.ubayakuliner160419035.util.buildDb
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -49,10 +51,7 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
 
     fun addDataTenant(list: List<Tenant>){
         launch {
-            val db = Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             db.ubayaKulinerDao().insertTenants(*list.toTypedArray())
         }
     }
@@ -62,25 +61,33 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         loadingLD.value= true
 
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             tenantsLD.value= db.ubayaKulinerDao().selectAllTenants()
+            Log.d("tenat1:", tenantsLD.toString())
         }
         loadingLD.value= false
     }
 
+    fun refresh2(){
+        tenantsLoadError.value= false
+        loadingLD.value= true
 
+        launch {
+            val db= Room.databaseBuilder(
+                getApplication(),
+                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
+            ).addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
+            tenantsLD.value= db.ubayaKulinerDao().selectAllTenants()
+            Log.d("tenat2:", tenantsLD.toString())
+        }
+        loadingLD.value= false
+    }
     suspend fun getTenant(): List<Tenant> {
         tenantsLoadError.value= false
         loadingLD.value= true
 
         var tenants:List<Tenant> = emptyList()
-        val db= Room.databaseBuilder(
-            getApplication(),
-            UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-        ).build()
+        val db = buildDb(getApplication())
         tenants = db.ubayaKulinerDao().selectAllTenants()
 
         Log.d("tenantdb2", tenantsLD.toString())
@@ -99,10 +106,7 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
     }
     fun addPromo(list: List<Promo>){
         launch {
-            val db = Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             db.ubayaKulinerDao().insertAllPromo(*list.toTypedArray())
         }
     }
@@ -110,10 +114,7 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         promosLoadError.value = false
         promosloadingLD.value = true
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             promosLD.value =  db.ubayaKulinerDao().selectAllPromo()
         }
         promosloadingLD.value=false
@@ -124,10 +125,7 @@ class ListViewModel(application: Application):AndroidViewModel(application), Cor
         reservationsloadingLD.value= true
 
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             reservationsLD.value =  db.ubayaKulinerDao().selectReservation()
         }
         reservationsloadingLD.value=false

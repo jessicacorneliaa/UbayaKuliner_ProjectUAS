@@ -54,56 +54,52 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
     fun addProfile(list:List<Account>){
         launch {
             Log.d("Input Account",list.toString())
-            val db = Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             db.ubayaKulinerDao().insertAllAccount(*list.toTypedArray())
         }
     }
      fun editPProfile(accounts:Account){
          launch {
              Log.d("Edit Account",accounts.toString())
-             val db = Room.databaseBuilder(
-                 getApplication(),
-                 UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-             ).build()
+             val db = buildDb(getApplication())
              db.ubayaKulinerDao().updateAccount(accounts)
          }
     }
     fun addReservation(list: List<Reservation>){
         launch {
-            val db = Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             db.ubayaKulinerDao().insertAllReserve(*list.toTypedArray())
         }
     }
-
+    fun updateMember(member:String, id:String){
+        launch {
+            val db = buildDb(getApplication())
+            db.ubayaKulinerDao().updateJumlahAcc(member,id)
+        }
+    }
     fun fetch(tenantId:String){
         tenantsLoadError.value= false
         loadingLD.value= true
 
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             tenantsLD.value= db.ubayaKulinerDao().selectTenant(tenantId)
             Log.d("tenantld", tenantsLD.value.toString())
         }
         loadingLD.value= false
     }
-
+    suspend fun countReservation(accountId: String):Int{
+        var count:Int
+        val db = buildDb(getApplication())
+        count= db.ubayaKulinerDao().countReservation(accountId.toString())
+        Log.d("countReservation:" , count .toString())
+        return count
+    }
     fun fetchPromo(promoId:String){
         promosLoadError.value = false
         promosloadingLD.value=true
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             promosLD.value =  db.ubayaKulinerDao().selectPromo(promoId)
         }
         promosloadingLD.value = false
@@ -113,10 +109,7 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
         accountsLoadError.value= false
 
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             accountsLD.value =  db.ubayaKulinerDao().selectAccount(accountId)
             Log.d("AccountDetailViewModel:" , accountsLD.value.toString())
         }
@@ -124,27 +117,18 @@ class DetailViewModel(application:Application):AndroidViewModel(application), Co
 
     fun addDataReview(list: List<Review>){
         launch {
-            val db = Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             db.ubayaKulinerDao().insertReviews(*list.toTypedArray())
         }
     }
 
     fun fetchReviews(tenantId:String){
-//        reviewsLoadError.value= false
-//        reviewsloadingLD.value= true
 
         launch {
-            val db= Room.databaseBuilder(
-                getApplication(),
-                UbayaKulinerDatabase::class.java, "ubayakulinerdb"
-            ).build()
+            val db = buildDb(getApplication())
             reviewsLD.value= db.ubayaKulinerDao().selectReviewsTenant(tenantId)
             Log.d("fetchreview", reviewsLD.value.toString())
         }
-//        loadingLD.value= false
     }
 
     override fun onCleared() {

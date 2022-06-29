@@ -26,16 +26,6 @@ class TenantReviewAdapter (val tenantReviewList: ArrayList<Review>) : RecyclerVi
 
     override fun onBindViewHolder(holder: TenantReviewViewHolder, position: Int) {
         holder.view.review = tenantReviewList[position]
-//        val review= tenantReviewList[position]
-//        Log.d("itemrev",review.date.toString())
-//
-//        with(holder.view){
-//            textTanggalReview.text= review.date
-//            textCommentReview.text= review.comment
-//            textAccountReview.text= review.accountId
-//            ratingBarReview.numStars= 5
-//            ratingBarReview.rating= review.star
-//        }
     }
 
     override fun getItemCount()= tenantReviewList.size

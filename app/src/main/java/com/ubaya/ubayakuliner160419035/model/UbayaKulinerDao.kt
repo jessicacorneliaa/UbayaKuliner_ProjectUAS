@@ -31,6 +31,9 @@ interface UbayaKulinerDao {
     @Query("SELECT * FROM reservation")
     suspend fun selectReservation():List<Reservation>
 
+    @Query("SELECT COUNT('idReservation') FROM reservation WHERE accountId =:accountId")
+    suspend fun countReservation(accountId:String):Int
+
     // Promo
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllPromo(vararg promo: Promo)
@@ -50,6 +53,10 @@ interface UbayaKulinerDao {
 
     @Update
     suspend fun updateAccount(account: Account)
+
+    @Query("UPDATE account SET member=:memberAccount WHERE idAccount=:id")
+    suspend fun updateJumlahAcc(memberAccount:String, id: String)
+
 
 
 

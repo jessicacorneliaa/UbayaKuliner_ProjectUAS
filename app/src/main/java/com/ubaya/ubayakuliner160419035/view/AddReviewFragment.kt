@@ -38,7 +38,7 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        dataBinding = DataBindingUtil.inflate<FragmentAddReviewBinding>(inflater, R.layout.fragment_add_review, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_review, container, false)
         return dataBinding.root
     }
 
@@ -51,17 +51,6 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
             tenantId= AddReviewFragmentArgs.fromBundle(requireArguments()).tenantId
         }
         viewModel.fetch(tenantId)
-
-//        val format= SimpleDateFormat("dd/M/yyyy")
-//        var date = format.format(Date())
-//        var rating= ratingBar.rating
-//        var review= Review(date, rating, editComment.toString(), "A001", tenantId)
-//        var listReview= listOf(review)
-//
-//        buttonSubmitReview.setOnClickListener{
-//            viewModel.addDataReview(listReview)
-//        }
-
 
         observeViewModel()
     }
@@ -79,7 +68,7 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
         //Retrieve the saved account id
         var sharedId = context?.packageName
         var shared = context?.getSharedPreferences(sharedId, Context.MODE_PRIVATE)
-        var playerId = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
+        var id = shared?.getString(AccountFragment.SHARED_ACCOUNT_ID, null)
 
         val current = LocalDateTime.now()
 
@@ -89,7 +78,7 @@ class AddReviewFragment : Fragment(), ButtonAddReviewClickListener {
         Log.d("check",v.tag.toString())
         val tag = v.tag.toString().split(",")
         val tenantId = tag[0]
-        val accountid = playerId
+        val accountid = id
 
         var review =Review(formatted, ratingBar.rating, editComment.text.toString(), accountid, tenantId)
         Log.d("test",review.toString())
